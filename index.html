@@ -43,8 +43,6 @@
     // console.log(movies_disney);
 
     const top20_genres = await d3.csv("datasets/top20_genres.csv");
-    // console.log(top20_genres);
-
 
     const dict = {'Disney+':{'order':4, 'dataset':movies_disney, 'color':'#000000','id':'#disney'},
     'Hulu':{'order':2, 'dataset':movies_hulu, 'color':'#1CE783','id':'#hulu'},
@@ -150,6 +148,15 @@
   let totalList = [disneyTotal, netflixTotal, huluTotal, primeTotal];
 
   let maxMovies = d3.max(totalList);
+
+  let top5_genres = top20_genres.slice(0, 5);
+  console.log(top5_genres);
+  let genreTitles = [];
+
+  // for (i in top5_genres) {
+  //   genreTitles.push(i);
+  // }
+  // console.log(genreTitles);
 
   // Scales
   const providerScale = d3.scaleBand()
