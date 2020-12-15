@@ -16,17 +16,19 @@
 
   <h1>Number of _____ Movies Available on Streaming Platforms</h1>
 
-  <!-- <svg width=600 height=400 id="barchart"></svg> -->
+
   <div id="disney" style="width: 500px; height: 500px;"></div>
   <div id="hulu" style="width: 500px; height: 500px;"></div>
   <div id="netflix" style="width: 500px; height: 500px;"></div>
   <div id="prime" style="width: 500px; height: 500px;"></div>
+  <svg width=600 height=600 id="genreChart"></svg>
 
   <script>
 
   const requestData = async function() {
 
     //reading data
+    const movies = await d3.csv("datasets/movies.csv");
 
     const movies_netflix = await d3.csv("datasets/movies_netflix.csv");
     // console.log(movies_netflix);
@@ -126,7 +128,69 @@
 
     console.log(dict[platform]['dataset']);
 
-}
+  }
+
+  const genreSVG = d3.select("svg#genreChart");
+  let genreMargin = { top: 10, right: 10, bottom: 50, left:50};
+  let genreWidth = genreSVG.attr("width") - genreMargin.left - genreMargin.right;
+  console.log(genreWidth)
+  let genreHeight = genreSVG.attr("height") - genreMargin.top - genreMargin.bottom;
+  console.log(genreHeight)
+
+  let annotations = genreSVG.append("g").attr("id","annotations");
+  let chartArea = genreSVG.append("g").attr("id","points")
+                  .attr("transform","translate("+genreMargin.left+","+genreMargin.top+")");
+
+  disneyTotal = movies_disney.length;
+  netflixTotal = movies_netflix.length;
+  huluTotal = movies_hulu.length;
+  primeTotal = movies_prime.length;
+
+  let totalList = [disneyTotal, netflixTotal, huluTotal, primeTotal];
+
+  let maxMovies = d3.max(totalList);
+
+  // Scales
+  const providerScale = d3.scaleLinear()
+                          .domain([0, 3])
+                          .range([0, genreHeight]);
+
+  const genreScale = d3.scaleLinear()
+                       .domain([maxMovies, 0])
+                       .range([0, genreWidth])
+
+  // Axes
+  // y axis
+  let leftAxis = d3.axisLeft(genreScale)
+  let leftGridlines = d3.axisLeft(genreScale)
+                        .tickSize(-genreWidth)
+                        .tickFormat("")
+
+  annotations.append("g")
+             .attr("class", "y axis")
+             .attr("transform","translate("+(genreMargin.left-10)+","+genreMargin.top+")")
+             .call(leftAxis)
+
+  annotations.append("g")
+             .attr("class", "y gridlines")
+             .attr("transform","translate("+(genreMargin.left-10)+","+genreMargin.top+")")
+             .call(leftGridlines);
+
+  // x axis
+  let bottomAxis = d3.axisBottom(providerScale)
+  let bottomGridlines = d3.axisBottom(providerScale)
+                          .tickSize(-genreHeight-10)
+                          .tickFormat("")
+                          .ticks(4)
+
+  annotations.append("g")
+    .attr("class", "x axis")
+    .attr("transform","translate("+genreMargin.left+","+(genreHeight+genreMargin.top)+")")
+    .call(bottomAxis);
+  annotations.append("g")
+    .attr("class", "x gridlines")
+    .attr("transform","translate("+genreMargin.left+","+(genreHeight+genreMargin.top)+")")
+    .call(bottomGridlines);
 
 }
   requestData();
