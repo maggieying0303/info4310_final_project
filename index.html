@@ -16,86 +16,119 @@
 
   <h1>Number of _____ Movies Available on Streaming Platforms</h1>
 
-  <svg width=600 height=400 id="barchart"></svg>
+  <!-- <svg width=600 height=400 id="barchart"></svg> -->
+  <div id="disney" style="width: 500px; height: 500px;"></div>
+  <div id="hulu" style="width: 500px; height: 500px;"></div>
+  <div id="netflix" style="width: 500px; height: 500px;"></div>
+  <div id="prime" style="width: 500px; height: 500px;"></div>
 
   <script>
-
-  let allLayer = d3.select("#barchart").append("g");
-  let allWidth = d3.select("#barchart").attr("width");
-  let allHeight = d3.select("#barchart").attr("height");
 
   const requestData = async function() {
 
     //reading data
 
     const movies_netflix = await d3.csv("datasets/movies_netflix.csv");
-    console.log(movies_netflix);
+    // console.log(movies_netflix);
 
     const movies_hulu = await d3.csv("datasets/movies_hulu.csv");
-    console.log(movies_hulu);
+    // console.log(movies_hulu);
 
     const movies_prime = await d3.csv("datasets/movies_prime.csv");
-    console.log(movies_prime);
+    // console.log(movies_prime);
 
     const movies_disney = await d3.csv("datasets/movies_disney.csv");
-    console.log(movies_disney);
+    // console.log(movies_disney);
 
     const top20_genres = await d3.csv("datasets/top20_genres.csv");
-    console.log(top20_genres);
+    // console.log(top20_genres);
 
-    // graphing the bar chart that compares the number of movies across platforms
 
-    const scale_barchart = d3.scaleLinear().domain([0, movies_prime.length]).range([10, allWidth-10]);
-
-    const dict = {'Netflix':{'order':1, 'dataset':movies_netflix, 'color':'#E50914'}, 'Hulu':{'order':2, 'dataset':movies_hulu, 'color':'#1CE783'}, 'Prime Video':{'order':3, 'dataset':movies_prime, 'color':'#00A8E1'}, 'Disney+':{'order':4, 'dataset':movies_disney, 'color':'#000000'}}
+    const dict = {'Disney+':{'order':4, 'dataset':movies_disney, 'color':'#000000','id':'#disney'},
+    'Hulu':{'order':2, 'dataset':movies_hulu, 'color':'#1CE783','id':'#hulu'},
+    'Netflix':{'order':1, 'dataset':movies_netflix, 'color':'#E50914', 'id':'#netflix'},
+    'Prime Video':{'order':3, 'dataset':movies_prime,'color':'#00A8E1','id':'#prime'},
+    };
 
     for (platform in dict){
 
-      d3.select("#barchart")
-        .append("rect")
-        .attr("x", 0)
-        .attr("y", (allHeight-100)/4*dict[platform]['order'])
-        .attr("width", scale_barchart(dict[platform]['dataset'].length))
-        .attr("height", 20)
-        .attr("fill", dict[platform]['color'])
-        .attr("opacity", 0.7);
+      const container = d3.select(dict[platform]['id']).style("position","relative");
+      const width = Number(container.style("width").replace("px",""));
+      const height = Number(container.style("height").replace("px",""));
+      const margin = { top: 10, right: 10, bottom: 50, left:50};
+      const chartWidth = width - margin.left - margin.right;
+      const chartHeight = height - margin.top - margin.bottom;
 
-      d3.select("#barchart")
-        .append("text")
-        .text(platform+": "+dict[platform]['dataset'].length.toString())
-        .attr("x", 0)
-        .attr("y", (allHeight-100)/4*dict[platform]['order']+40);
+      // Add a canvas element
+      const canvas = container.append("canvas")
+                              .attr("width",chartWidth)
+                              .attr("height",chartHeight)
+                              .style("position","absolute")
+                              .style("top",margin.top + 'px')
+                              .style("left",margin.left + 'px');
 
-    }
+      // Layer SVG on top of the canvas so we can draw axes and make the canvas interactive
+      const svg = container.append("svg")
+                           .attr("width", width)
+                           .attr("height", height)
+                           .style("position","absolute")
+                           .style("top", 0)
+                           .style("left", 0);
+                           const interactiveArea = svg.append("g").attr("transform","translate("+margin.left+","+margin.top+")");
 
+     interactiveArea.append("rect")
+                    .attr("width",chartWidth)
+                    .attr("height",chartHeight)
+                    .attr("x",0)
+                    .attr("y",0)
+                    .attr("opacity",0);
 
+      indexMatrix = []
+      for (let i=0; i<height; i++) {
+        row = [];
+        for (let j=0; j<width; j++) {
+          row.push(-1);
+        }
+        indexMatrix.push(row);
+      }
 
-    // d3.select("#barchart")
-    //   .append("rect")
-    //   .attr("x", 0)
-    //   .attr("y", (allHeight-100)/4*2)
-    //   .attr("width", scale_barchart(movies_hulu.length))
-    //   .attr("height", 20)
-    //   .attr("fill", "purple");
-    //
-    // d3.select("#barchart")
-    //   .append("rect")
-    //   .attr("x", 0)
-    //   .attr("y", (allHeight-100)/4*3)
-    //   .attr("width", scale_barchart(movies_prime.length))
-    //   .attr("height", 20)
-    //   .attr("fill", "purple");
-    //
-    // d3.select("#barchart")
-    //   .append("rect")
-    //   .attr("x", 0)
-    //   .attr("y", (allHeight-100))
-    //   .attr("width", scale_barchart(movies_disney.length))
-    //   .attr("height", 20)
-    //   .attr("fill", "purple");
+      // draw
+      const context = canvas.node().getContext('2d');
+      context.clearRect(0, 0, width, height);
+      context.globalAlpha = 0.6;
 
-  }
+      // console.log(dict[platform]['dataset']);
 
+      dict[platform]['dataset'].forEach( (d,i) => {
+        let x = d3.randomNormal(margin.left, chartWidth)();
+        let y = d3.randomNormal(margin.top, chartHeight)();
+        let rad = 3;
+        let color = "purple";
+
+        context.fillStyle = color;
+        context.beginPath();
+        context.arc(x, y, rad, 0, 2*Math.PI);
+        context.fill();
+
+      // Store the indices to make the canvas interactive -- yay trigonometry
+      // let radSq = rad * rad;
+      // for (let mx=x-rad; mx<=x+rad; mx++) {
+      //   for (let my=y-rad; my<=y+rad; my++) {
+      //     distance = ((x - mx) * (x - mx)) + ((y - my) * (y - my));
+      //     console.log(distance);
+      //     if (distance <= radSq) {
+      //         indexMatrix[parseInt(my)][parseInt(mx)] = i;
+      //     }
+      //  }
+      // }
+
+    });
+
+    console.log(dict[platform]['dataset']);
+
+}
+
+}
   requestData();
 
   </script>
