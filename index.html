@@ -21,7 +21,7 @@
   <div id="hulu" style="width: 500px; height: 500px;"></div>
   <div id="netflix" style="width: 500px; height: 500px;"></div>
   <div id="prime" style="width: 500px; height: 500px;"></div>
-  <svg width=600 height=600 id="genreChart"></svg>
+  <svg width=800 height=600 id="genreChart" ></svg>
 
   <script>
 
@@ -131,9 +131,9 @@
   const genreSVG = d3.select("svg#genreChart");
   let genreMargin = { top: 10, right: 10, bottom: 50, left:50};
   let genreWidth = genreSVG.attr("width") - genreMargin.left - genreMargin.right;
-  console.log(genreWidth)
+  // console.log(genreWidth)
   let genreHeight = genreSVG.attr("height") - genreMargin.top - genreMargin.bottom;
-  console.log(genreHeight)
+  // console.log(genreHeight)
 
   let annotations = genreSVG.append("g").attr("id","annotations");
   let chartArea = genreSVG.append("g").attr("id","points")
@@ -150,12 +150,12 @@
   let maxMovies = d3.max(totalList);
 
   let top5_genres = top20_genres.slice(0, 5);
-  console.log(top5_genres);
-  let genreTitles = [];
+  // console.log(top5_genres[0]["Genre"]);
 
-  // for (i in top5_genres) {
-  //   genreTitles.push(i);
-  // }
+  let genreTitles = [];
+  for (i in top5_genres) {
+    genreTitles.push(top5_genres[i]["Genre"]);
+  }
   // console.log(genreTitles);
 
   // Scales
@@ -163,43 +163,37 @@
                           .domain(providerList)
                           .range([0, genreWidth]);
 
-  const genreScale = d3.scaleLinear()
-                       .domain([maxMovies, 0])
-                       .range([0, genreWidth])
+  const genreScale = d3.scaleBand()
+                       .domain(genreTitles)
+                       .range([genreHeight, 0])
 
   // Axes
   // x axis
   genreSVG.append("g")
-          .attr("transform","translate("+genreMargin.left+","+(genreHeight+genreMargin.top)+")")
-          .call(d3.axisBottom(providerScale))
+          .attr("class", "x")
+          .attr("transform","translate("+(genreMargin.left+50)+","+(genreHeight+genreMargin.top)+")")
+          .call(d3.axisBottom(providerScale)
+                  .tickSize(0))
+          .selectAll("text")
+          .attr("transform","translate("+0+","+genreMargin.top+")")
+          .style("font-size", 14)
 
   // y axis
-  let leftAxis = d3.axisLeft(genreScale)
-  // let leftGridlines = d3.axisLeft(genreScale)
-  //                       .tickSize(-genreWidth)
-  //                       .tickFormat("")
+  genreSVG.append("g")
+          .attr("class", "y")
+          .attr("transform","translate("+(genreMargin.left+50)+","+(genreMargin.top)+")")
+          .call(d3.axisLeft(genreScale)
+                  .tickSize(0))
+          .selectAll("text")
+          .attr("transform","translate("+(-genreMargin.right)+","+0+")")
+          .style("font-size", 14)
 
-  annotations.append("g")
-             .attr("class", "y axis")
-             .attr("transform","translate("+(genreMargin.left)+","+genreMargin.top+")")
-             .call(leftAxis)
+  // color palette = one color per subgroup
+  const colorScale = d3.scaleOrdinal()
+                       .domain(providerList)
+                       .range(['#e50914','#3DBB3D','#113CCF','#00A8E1'])
 
-  // x axis
-  // let bottomAxis = d3.axisBottom(providerScale)
-  // let bottomGridlines = d3.axisBottom(providerScale)
-  //                         .tickSize(-genreHeight-10)
-  //                         .tickFormat("")
-  //
-  // annotations.append("g")
-  //   .attr("class", "x axis")
-  //   .attr("transform","translate("+genreMargin.left+","+(genreHeight+genreMargin.top)+")")
-  //   .call(bottomAxis);
-  // annotations.append("g")
-  //   .attr("class", "x gridlines")
-  //   .attr("transform","translate("+genreMargin.left+","+(genreHeight+genreMargin.top)+")")
-  //   .call(bottomGridlines);
-
-}
+  }
   requestData();
 
   </script>
