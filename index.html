@@ -146,51 +146,51 @@
   huluTotal = movies_hulu.length;
   primeTotal = movies_prime.length;
 
+  let providerList = ["Netflix", "Hulu", "Disney+", "Prime"]
   let totalList = [disneyTotal, netflixTotal, huluTotal, primeTotal];
 
   let maxMovies = d3.max(totalList);
 
   // Scales
-  const providerScale = d3.scaleLinear()
-                          .domain([0, 3])
-                          .range([0, genreHeight]);
+  const providerScale = d3.scaleBand()
+                          .domain(providerList)
+                          .range([0, genreWidth]);
 
   const genreScale = d3.scaleLinear()
                        .domain([maxMovies, 0])
                        .range([0, genreWidth])
 
   // Axes
+  // x axis
+  genreSVG.append("g")
+          .attr("transform","translate("+genreMargin.left+","+(genreHeight+genreMargin.top)+")")
+          .call(d3.axisBottom(providerScale))
+
   // y axis
   let leftAxis = d3.axisLeft(genreScale)
-  let leftGridlines = d3.axisLeft(genreScale)
-                        .tickSize(-genreWidth)
-                        .tickFormat("")
+  // let leftGridlines = d3.axisLeft(genreScale)
+  //                       .tickSize(-genreWidth)
+  //                       .tickFormat("")
 
   annotations.append("g")
              .attr("class", "y axis")
-             .attr("transform","translate("+(genreMargin.left-10)+","+genreMargin.top+")")
+             .attr("transform","translate("+(genreMargin.left)+","+genreMargin.top+")")
              .call(leftAxis)
 
-  annotations.append("g")
-             .attr("class", "y gridlines")
-             .attr("transform","translate("+(genreMargin.left-10)+","+genreMargin.top+")")
-             .call(leftGridlines);
-
   // x axis
-  let bottomAxis = d3.axisBottom(providerScale)
-  let bottomGridlines = d3.axisBottom(providerScale)
-                          .tickSize(-genreHeight-10)
-                          .tickFormat("")
-                          .ticks(4)
-
-  annotations.append("g")
-    .attr("class", "x axis")
-    .attr("transform","translate("+genreMargin.left+","+(genreHeight+genreMargin.top)+")")
-    .call(bottomAxis);
-  annotations.append("g")
-    .attr("class", "x gridlines")
-    .attr("transform","translate("+genreMargin.left+","+(genreHeight+genreMargin.top)+")")
-    .call(bottomGridlines);
+  // let bottomAxis = d3.axisBottom(providerScale)
+  // let bottomGridlines = d3.axisBottom(providerScale)
+  //                         .tickSize(-genreHeight-10)
+  //                         .tickFormat("")
+  //
+  // annotations.append("g")
+  //   .attr("class", "x axis")
+  //   .attr("transform","translate("+genreMargin.left+","+(genreHeight+genreMargin.top)+")")
+  //   .call(bottomAxis);
+  // annotations.append("g")
+  //   .attr("class", "x gridlines")
+  //   .attr("transform","translate("+genreMargin.left+","+(genreHeight+genreMargin.top)+")")
+  //   .call(bottomGridlines);
 
 }
   requestData();
