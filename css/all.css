@@ -1,3 +1,25 @@
-body{
+body {
   font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
+.track,
+.track-inset,
+.track-overlay {
+  stroke-linecap: round;
+}
+
+.track {
+  stroke: #C4C4C4;
+  stroke-opacity: 0.3;
+  stroke-width: 6px;
+}
+
+.track-overlay {
+  pointer-events: stroke;
+  stroke-width: 50px;
+  cursor: crosshair;
+}
+
+.handle {
 }

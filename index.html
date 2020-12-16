@@ -5,8 +5,10 @@
   <link rel="shortcut icon" href="#"/>
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://d3js.org/topojson.v2.min.js"></script>
+  <script type="text/javascript" src="js/sliderVis.js"></script>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" type="text/css" href="css/all.css" media="all" />
 
   <title>Final Project</title>
@@ -16,7 +18,10 @@
 
   <h1>Number of _____ Movies Available on Streaming Platforms</h1>
 
-  <svg width=600 height=400 id="barchart"></svg>
+  <div style="margin: 0 auto; width: 1000px">
+    <svg width="600" height="400" id="barchart"/>
+    <svg width="1000" height="700" class="budgetslider"/>
+  <div>
 
   <script>
 
@@ -42,6 +47,9 @@
 
     const top20_genres = await d3.csv("datasets/top20_genres.csv");
     console.log(top20_genres);
+
+    // add slider vis
+    drawSliderVis(".budgetslider");
 
     // graphing the bar chart that compares the number of movies across platforms
 
