@@ -1,4 +1,4 @@
-function drawYolkVis(svgClass, data) {
+function drawYolkVis(svgClass, data, axes) {
   let yolkAttr = {
     "width": 700,
     "height": 700,
@@ -9,7 +9,6 @@ function drawYolkVis(svgClass, data) {
   let levels = 4;
   let maxValue = 7;
   let dotRadius = 4;
-  let axes = ['Drama','Comedy', 'Thriller', 'Action', 'Documentary', 'Family', 'Adventure', 'Fantasy'];
   let platformColor = d3.scaleOrdinal().domain(['Disney+', 'Hulu', 'Netflix', 'Prime Video']).range(['#9e9e9e','#60EEA8','#ED535B','#4DC2EA' ]);
 
   var allAxis = (axes),	//Names of each axis

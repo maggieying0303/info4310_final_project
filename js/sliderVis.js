@@ -111,8 +111,8 @@ function drawSliderVis(svgClass) {
         .style("opacity", function(d) {
           if (platformMinPrice[d] < userPrice) {
             for (var plan in platformDetailPrice[d]) {
-              console.log(platformDetailPrice[d]);
-              console.log(plan)
+              // console.log(platformDetailPrice[d]);
+              // console.log(plan)
               if (platformDetailPrice[d][plan] < userPrice) {
                 d3.selectAll("#" + d.replace("+", "") + "_" + plan + "_text")
                   .style("opacity", 1);
@@ -205,7 +205,7 @@ function drawSliderVis(svgClass) {
               return sliderAttr.height*0.45 + yCount + 15*(i+1);
             })
             .text(function(d) {
-              console.log(d)
+              // console.log(d)
               return d;
             })
             .style("text-anchor", "start")
