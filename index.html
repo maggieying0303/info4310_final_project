@@ -17,6 +17,7 @@
   <h1>Number of _____ Movies Available on Streaming Platforms</h1>
 
 
+  <svg width=800 height=600 id="bar_chart"></svg>
   <div id="disney" style="width: 500px; height: 500px;"></div>
   <div id="hulu" style="width: 500px; height: 500px;"></div>
   <div id="netflix" style="width: 500px; height: 500px;"></div>
@@ -128,70 +129,109 @@
 
   }
 
-  const genreSVG = d3.select("svg#genreChart");
-  let genreMargin = { top: 10, right: 10, bottom: 50, left:50};
-  let genreWidth = genreSVG.attr("width") - genreMargin.left - genreMargin.right;
-  // console.log(genreWidth)
-  let genreHeight = genreSVG.attr("height") - genreMargin.top - genreMargin.bottom;
-  // console.log(genreHeight)
-
-  let annotations = genreSVG.append("g").attr("id","annotations");
-  let chartArea = genreSVG.append("g").attr("id","points")
-                  .attr("transform","translate("+genreMargin.left+","+genreMargin.top+")");
-
-  disneyTotal = movies_disney.length;
-  netflixTotal = movies_netflix.length;
-  huluTotal = movies_hulu.length;
-  primeTotal = movies_prime.length;
-
-  let providerList = ["Netflix", "Hulu", "Disney+", "Prime"]
-  let totalList = [disneyTotal, netflixTotal, huluTotal, primeTotal];
-
-  let maxMovies = d3.max(totalList);
-
-  let top5_genres = top20_genres.slice(0, 5);
-  // console.log(top5_genres[0]["Genre"]);
-
-  let genreTitles = [];
-  for (i in top5_genres) {
-    genreTitles.push(top5_genres[i]["Genre"]);
-  }
+  // const genreSVG = d3.select("svg#genreChart");
+  // let genreMargin = { top: 10, right: 10, bottom: 50, left:50};
+  // let genreWidth = genreSVG.attr("width") - genreMargin.left - genreMargin.right;
+  // // console.log(genreWidth)
+  // let genreHeight = genreSVG.attr("height") - genreMargin.top - genreMargin.bottom;
+  // // console.log(genreHeight)
+  //
+  // let annotations = genreSVG.append("g").attr("id","annotations");
+  // let chartArea = genreSVG.append("g").attr("id","points")
+  //                 .attr("transform","translate("+genreMargin.left+","+genreMargin.top+")");
+  //
+  // disneyTotal = movies_disney.length;
+  // netflixTotal = movies_netflix.length;
+  // huluTotal = movies_hulu.length;
+  // primeTotal = movies_prime.length;
+  //
+  // let providerList = ["Netflix", "Hulu", "Disney+", "Prime"]
+  // let totalList = [disneyTotal, netflixTotal, huluTotal, primeTotal];
+  //
+  // let maxMovies = d3.max(totalList);
+  //
+  // let top5_genres = top20_genres.slice(0, 5);
+  // // console.log(top5_genres[0]["Genre"]);
+  //
+  // let genreTitles = [];
+  // for (i in top5_genres) {
+  //   genreTitles.push(top5_genres[i]["Genre"]);
+  // }
   // console.log(genreTitles);
 
   // Scales
-  const providerScale = d3.scaleBand()
-                          .domain(providerList)
-                          .range([0, genreWidth]);
-
-  const genreScale = d3.scaleBand()
-                       .domain(genreTitles)
-                       .range([genreHeight, 0])
+  // const providerScale = d3.scaleBand()
+  //                         .domain(providerList)
+  //                         .range([0, genreWidth]);
+  //
+  // const genreScaleCategories = d3.scaleBand()
+  //                      .domain(genreTitles)
+  //                      .range([genreHeight, 0])
+  //
+  // const genreScale = d3.scaleLinear()
+  //                      .domain([0, maxMovies])
+  //                      .range([genreHeight, 0])
 
   // Axes
   // x axis
-  genreSVG.append("g")
-          .attr("class", "x")
-          .attr("transform","translate("+(genreMargin.left+50)+","+(genreHeight+genreMargin.top)+")")
-          .call(d3.axisBottom(providerScale)
-                  .tickSize(0))
-          .selectAll("text")
-          .attr("transform","translate("+0+","+genreMargin.top+")")
-          .style("font-size", 14)
+  // genreSVG.append("g")
+  //         .attr("class", "x")
+  //         .attr("transform","translate("+(genreMargin.left+50)+","+(genreHeight+genreMargin.top)+")")
+  //         .call(d3.axisBottom(providerScale)
+  //                 .tickSize(0))
+  //         .selectAll("text")
+  //         .attr("transform","translate("+0+","+genreMargin.top+")")
+  //         .style("font-size", 14)
 
   // y axis
-  genreSVG.append("g")
-          .attr("class", "y")
-          .attr("transform","translate("+(genreMargin.left+50)+","+(genreMargin.top)+")")
-          .call(d3.axisLeft(genreScale)
-                  .tickSize(0))
-          .selectAll("text")
-          .attr("transform","translate("+(-genreMargin.right)+","+0+")")
-          .style("font-size", 14)
+  // genreSVG.append("g")
+  //         .attr("class", "y")
+  //         .attr("transform","translate("+(genreMargin.left+50)+","+(genreMargin.top)+")")
+  //         .call(d3.axisLeft(genreScaleCategories)
+  //                 .tickSize(0))
+  //         .selectAll("text")
+  //         .attr("transform","translate("+(-genreMargin.right)+","+0+")")
+  //         .style("font-size", 14)
 
   // color palette = one color per subgroup
-  const colorScale = d3.scaleOrdinal()
-                       .domain(providerList)
-                       .range(['#e50914','#3DBB3D','#113CCF','#00A8E1'])
+  // const colorScale = d3.scaleOrdinal()
+  //                      .domain(providerList)
+  //                      .range(['#e50914','#3DBB3D','#113CCF','#00A8E1'])
+
+  // Netflix movies
+  // let netflix_genrecount = {}
+  // for (i in movies_netflix) {
+  //   console.log((movies_netflix[i]["Genres"]).split(","));
+  // }
+
+
+  //barchart!!!
+
+  let allLayer = d3.select("#bar_chart").append("g");
+  let allWidth = d3.select("#bar_chart").attr("width");
+  let allHeight = d3.select("#bar_chart").attr("height");
+  const scale_barchart = d3.scaleLinear().domain([0, movies_prime.length]).range([10, allWidth-10]);
+
+      const dict_bar = {'Netflix':{'order':1, 'dataset':movies_netflix, 'color':'#E50914'}, 'Hulu':{'order':2, 'dataset':movies_hulu, 'color':'#1CE783'}, 'Prime Video':{'order':3, 'dataset':movies_prime, 'color':'#00A8E1'}, 'Disney+':{'order':4, 'dataset':movies_disney, 'color':'#000000'}}
+
+      for (platform in dict_bar){
+
+        d3.select("#bar_chart")
+          .append("rect")
+          .attr("x", 0)
+          .attr("y", (allHeight-100)/4*dict_bar[platform]['order'])
+          .attr("width", scale_barchart(dict_bar[platform]['dataset'].length))
+          .attr("height", 20)
+          .attr("fill", dict_bar[platform]['color'])
+          .attr("opacity", 0.7);
+
+        d3.select("#bar_chart")
+          .append("text")
+          .text(platform+": "+dict_bar[platform]['dataset'].length.toString())
+          .attr("x", 0)
+          .attr("y", (allHeight-100)/4*dict_bar[platform]['order']+40);
+
+      }
 
   }
   requestData();
