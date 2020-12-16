@@ -18,23 +18,23 @@
 
 <body>
 
-  <h1>Streaming Platforms for Moviegoers</h1>
-
-  <!-- <img src="pics/mock1.png" style="width: 700px" alt="mock"/>
-  <img src="pics/mock2.png" style="width: 700px" alt="mock"/>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-  <br/> -->
+  <h1>streaming platforms for moviegoers</h1>
+  <p>Prime video wins the number game.</p>
   <div style="margin: 0 auto; width: 1000px; text-align: center">
-    <svg width="900" height="600" class="barchart"></svg>
+    <h2>
+    <svg width="900" height="500" class="barchart"></svg>
     <img src="pics/mock1.png" style="width: 700px" alt="mock"/>
     <img src="pics/mock2.png" style="width: 700px" alt="mock"/>
     <br/>
     <br/>
-    <h2>Average Movie Ratings Across Platforms</h2>
+    <h2>average movie ratings across platforms</h2>
+    <p style="margin-right: 50px;">... however, quantity ≠ quality.</p>
+  <div>
+    <!-- <div style="width:1500px; display:flex; flex-direction:row; align-items:center;"> -->
     <svg width="700" height="700" class="yolk"/>
+    <div style="margin-left: 0px" id="yolk_hover"></div>
+    <!-- </div> -->
+  </div>
     <svg width="1000" height="700" class="budgetslider"/>
   <div>
 
@@ -60,13 +60,13 @@
 
     let topGenres = ['Drama','Comedy', 'Thriller', 'Action', 'Documentary', 'Family', 'Adventure', 'Fantasy'];
     let platforms = ["Netflix", "Hulu", "Prime", "Disney+"];
-    console.log(movies_netflix);
+    // console.log(movies_netflix);
     // console.log(movies_hulu);
     // console.log(movies_prime);
     // console.log(movies_disney);
     // console.log(yolk);
     // console.log(movies)
-    console.log(top20_genres);
+    // console.log(top20_genres);
 
     // add slider vis
     drawBarChart(".barchart", topGenres, platforms, top20_genres);
@@ -74,71 +74,71 @@
     drawYolkVis(".yolk", getYolkData(yolk), topGenres);
 
     // density charts
-    const dict = {'Disney+':{'order':4, 'dataset':movies_disney, 'color':'#000000','id':'#disney'},
-    'Hulu':{'order':2, 'dataset':movies_hulu, 'color':'#1CE783','id':'#hulu'},
-    'Netflix':{'order':1, 'dataset':movies_netflix, 'color':'#E50914', 'id':'#netflix'},
-    'Prime Video':{'order':3, 'dataset':movies_prime,'color':'#00A8E1','id':'#prime'},
-    };
-
-    for (platform in dict) {
-
-      const container = d3.select(dict[platform]['id']).style("position","relative");
-      const width = Number(container.style("width").replace("px",""));
-      const height = Number(container.style("height").replace("px",""));
-      const margin = { top: 10, right: 10, bottom: 50, left:50};
-      const chartWidth = width - margin.left - margin.right;
-      const chartHeight = height - margin.top - margin.bottom;
-
-      // Add a canvas element
-      const canvas = container.append("canvas")
-                              .attr("width",chartWidth)
-                              .attr("height",chartHeight)
-                              .style("position","absolute")
-                              .style("top",margin.top + 'px')
-                              .style("left",margin.left + 'px');
-
-      // Layer SVG on top of the canvas so we can draw axes and make the canvas interactive
-      const svg = container.append("svg")
-                           .attr("width", width)
-                           .attr("height", height)
-                           .style("position","absolute")
-                           .style("top", 0)
-                           .style("left", 0);
-                           const interactiveArea = svg.append("g").attr("transform","translate("+margin.left+","+margin.top+")");
-
-     interactiveArea.append("rect")
-                    .attr("width",chartWidth)
-                    .attr("height",chartHeight)
-                    .attr("x",0)
-                    .attr("y",0)
-                    .attr("opacity",0);
-
-      indexMatrix = []
-      for (let i=0; i<height; i++) {
-        row = [];
-        for (let j=0; j<width; j++) {
-          row.push(-1);
-        }
-        indexMatrix.push(row);
-      }
-
-      // draw
-      const context = canvas.node().getContext('2d');
-      context.clearRect(0, 0, width, height);
-      context.globalAlpha = 0.6;
-
-      // console.log(dict[platform]['dataset']);
-
-      dict[platform]['dataset'].forEach( (d,i) => {
-        let x = d3.randomNormal(margin.left, chartWidth)();
-        let y = d3.randomNormal(margin.top, chartHeight)();
-        let rad = 3;
-        let color = "purple";
-
-        context.fillStyle = color;
-        context.beginPath();
-        context.arc(x, y, rad, 0, 2*Math.PI);
-        context.fill();
+    // const dict = {'Disney+':{'order':4, 'dataset':movies_disney, 'color':'#000000','id':'#disney'},
+    // 'Hulu':{'order':2, 'dataset':movies_hulu, 'color':'#1CE783','id':'#hulu'},
+    // 'Netflix':{'order':1, 'dataset':movies_netflix, 'color':'#E50914', 'id':'#netflix'},
+    // 'Prime Video':{'order':3, 'dataset':movies_prime,'color':'#00A8E1','id':'#prime'},
+    // };
+    //
+    // for (platform in dict) {
+    //
+    //   const container = d3.select(dict[platform]['id']).style("position","relative");
+    //   const width = Number(container.style("width").replace("px",""));
+    //   const height = Number(container.style("height").replace("px",""));
+    //   const margin = { top: 10, right: 10, bottom: 50, left:50};
+    //   const chartWidth = width - margin.left - margin.right;
+    //   const chartHeight = height - margin.top - margin.bottom;
+    //
+    //   // Add a canvas element
+    //   const canvas = container.append("canvas")
+    //                           .attr("width",chartWidth)
+    //                           .attr("height",chartHeight)
+    //                           .style("position","absolute")
+    //                           .style("top",margin.top + 'px')
+    //                           .style("left",margin.left + 'px');
+    //
+    //   // Layer SVG on top of the canvas so we can draw axes and make the canvas interactive
+    //   const svg = container.append("svg")
+    //                        .attr("width", width)
+    //                        .attr("height", height)
+    //                        .style("position","absolute")
+    //                        .style("top", 0)
+    //                        .style("left", 0);
+    //                        const interactiveArea = svg.append("g").attr("transform","translate("+margin.left+","+margin.top+")");
+    //
+    //  interactiveArea.append("rect")
+    //                 .attr("width",chartWidth)
+    //                 .attr("height",chartHeight)
+    //                 .attr("x",0)
+    //                 .attr("y",0)
+    //                 .attr("opacity",0);
+    //
+    //   indexMatrix = []
+    //   for (let i=0; i<height; i++) {
+    //     row = [];
+    //     for (let j=0; j<width; j++) {
+    //       row.push(-1);
+    //     }
+    //     indexMatrix.push(row);
+    //   }
+    //
+    //   // draw
+    //   const context = canvas.node().getContext('2d');
+    //   context.clearRect(0, 0, width, height);
+    //   context.globalAlpha = 0.6;
+    //
+    //   // console.log(dict[platform]['dataset']);
+    //
+    //   dict[platform]['dataset'].forEach( (d,i) => {
+    //     let x = d3.randomNormal(margin.left, chartWidth)();
+    //     let y = d3.randomNormal(margin.top, chartHeight)();
+    //     let rad = 3;
+    //     let color = "purple";
+    //
+    //     context.fillStyle = color;
+    //     context.beginPath();
+    //     context.arc(x, y, rad, 0, 2*Math.PI);
+    //     context.fill();
 
       // Store the indices to make the canvas interactive
       // let radSq = rad * rad;
@@ -152,11 +152,11 @@
       //  }
       // }
 
-    });
+    // });
 
-    console.log(dict[platform]['dataset']);
+    // console.log(dict[platform]['dataset']);
 
-  }
+  // }
 
   // const genreSVG = d3.select("svg#genreChart");
   // let genreMargin = { top: 10, right: 10, bottom: 50, left:50};
@@ -236,31 +236,31 @@
 
   //barchart!!!
 
-  let allLayer = d3.select("#bar_chart").append("g");
-  let allWidth = d3.select("#bar_chart").attr("width");
-  let allHeight = d3.select("#bar_chart").attr("height");
-  const scale_barchart = d3.scaleLinear().domain([0, movies_prime.length]).range([10, allWidth-10]);
-
-      const dict_bar = {'Netflix':{'order':1, 'dataset':movies_netflix, 'color':'#E50914'}, 'Hulu':{'order':2, 'dataset':movies_hulu, 'color':'#1CE783'}, 'Prime Video':{'order':3, 'dataset':movies_prime, 'color':'#00A8E1'}, 'Disney+':{'order':4, 'dataset':movies_disney, 'color':'#000000'}}
-
-      for (platform in dict_bar){
-
-        d3.select("#bar_chart")
-          .append("rect")
-          .attr("x", 0)
-          .attr("y", (allHeight-100)/4*dict_bar[platform]['order'])
-          .attr("width", scale_barchart(dict_bar[platform]['dataset'].length))
-          .attr("height", 20)
-          .attr("fill", dict_bar[platform]['color'])
-          .attr("opacity", 0.7);
-
-        d3.select("#bar_chart")
-          .append("text")
-          .text(platform+": "+dict_bar[platform]['dataset'].length.toString())
-          .attr("x", 0)
-          .attr("y", (allHeight-100)/4*dict_bar[platform]['order']+40);
-
-      }
+  // let allLayer = d3.select("#bar_chart").append("g");
+  // let allWidth = d3.select("#bar_chart").attr("width");
+  // let allHeight = d3.select("#bar_chart").attr("height");
+  // const scale_barchart = d3.scaleLinear().domain([0, movies_prime.length]).range([10, allWidth-10]);
+  //
+  //     const dict_bar = {'Netflix':{'order':1, 'dataset':movies_netflix, 'color':'#E50914'}, 'Hulu':{'order':2, 'dataset':movies_hulu, 'color':'#1CE783'}, 'Prime Video':{'order':3, 'dataset':movies_prime, 'color':'#00A8E1'}, 'Disney+':{'order':4, 'dataset':movies_disney, 'color':'#000000'}}
+  //
+  //     for (platform in dict_bar){
+  //
+  //       d3.select("#bar_chart")
+  //         .append("rect")
+  //         .attr("x", 0)
+  //         .attr("y", (allHeight-100)/4*dict_bar[platform]['order'])
+  //         .attr("width", scale_barchart(dict_bar[platform]['dataset'].length))
+  //         .attr("height", 20)
+  //         .attr("fill", dict_bar[platform]['color'])
+  //         .attr("opacity", 0.7);
+  //
+  //       d3.select("#bar_chart")
+  //         .append("text")
+  //         .text(platform+": "+dict_bar[platform]['dataset'].length.toString())
+  //         .attr("x", 0)
+  //         .attr("y", (allHeight-100)/4*dict_bar[platform]['order']+40);
+  //
+  //     }
 
   }
   requestData();

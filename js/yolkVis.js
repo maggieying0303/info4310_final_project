@@ -9,7 +9,7 @@ function drawYolkVis(svgClass, data, axes) {
   let levels = 4;
   let maxValue = 7;
   let dotRadius = 4;
-  let platformColor = d3.scaleOrdinal().domain(['Disney+', 'Hulu', 'Netflix', 'Prime Video']).range(['#9e9e9e','#60EEA8','#ED535B','#4DC2EA' ]);
+  let platformColor = d3.scaleOrdinal().domain(['Disney+', 'Hulu', 'Netflix', 'Prime Video']).range(['#9e9e9e','#60EEA8','#ED535B','#4DC2EA']);
 
   var allAxis = (axes),	//Names of each axis
   total = allAxis.length,	//The number of different axes
@@ -113,10 +113,37 @@ function drawYolkVis(svgClass, data, axes) {
         d3.selectAll(".radarStroke")
           .transition().duration(200)
           .style("opacity", 0.2);
+
         //Bring back the hovered over blob
         d3.select(this)
           .transition().duration(200)
           .style("fill-opacity", 0.7);
+
+        let dict = { 0:["Disney+", "Documentary", "Comedy"], 1:["Hulu", "Documentary", "Family"], 2:["Netflix","Documentary", "Thriller"], 3:["Prime Video", "Documentary", "Thriller"]};
+
+        d3.select("#yolk_hover")
+          .append("text")
+          .attr("class", "yolk_hover_text")
+          .style("text-align", "center")
+          .style("font-size", "20px")
+          .style("font-weight", "bold")
+          .style("display", "block")
+          .style("margin-bottom", "10px")
+          .text(dict[i][0]);
+
+        d3.select("#yolk_hover")
+          .append("text")
+          .attr("class", "yolk_hover_text")
+          .style("display", "block")
+          .style("margin-bottom", "10px")
+          .text("Highest rated genre: " + dict[i][1])
+
+        d3.select("#yolk_hover")
+          .append("text")
+          .attr("class", "yolk_hover_text")
+          .style("display", "block")
+          .style("margin-bottom", "10px")
+          .text("Lowest rated genre: " + dict[i][2])
       })
       .on('mouseout', function(){
         //Bring back all blobs
@@ -128,6 +155,9 @@ function drawYolkVis(svgClass, data, axes) {
         d3.selectAll(".radarStroke")
           .transition().duration(200)
           .style("opacity", 1);
+
+        d3.selectAll(".yolk_hover_text")
+          .text("")
      });
 
   //Create the outlines
@@ -146,7 +176,7 @@ function drawYolkVis(svgClass, data, axes) {
     .attr("r", dotRadius)
     .attr("cx", (d,i) => rScale(d.ratings) * Math.cos(angleSlice*i - Math.PI/2))
     .attr("cy", (d,i) => rScale(d.ratings) * Math.sin(angleSlice*i - Math.PI/2))
-    .style("fill", (d,i,j) => platformColor(j))
+    .style("fill", (d, i, j) =>platformColor(j) )
     .style("fill-opacity", 0.8);
 
   //hovering interaction
