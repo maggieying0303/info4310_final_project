@@ -3,7 +3,7 @@ function drawSliderVis(svgClass) {
   let sliderAttr = {
     "width": 1000,
     "height": 700
-  }
+  };
   let platforms = ["Netflix", "Hulu", "Prime", "Disney+"];
   let platformMinPrice = {
     "Netflix": 8.99,
