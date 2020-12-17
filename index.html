@@ -27,7 +27,7 @@
     <img src="pics/mock2.png" style="width: 700px" alt="mock"/>
     <br/>
     <br/>
-    <h2>average movie ratings across platforms</h2>
+    <h2>median movie ratings across platforms</h2>
     <p style="margin-right: 50px;">... however, quantity ≠ quality.</p>
   <div>
     <!-- <div style="width:1500px; display:flex; flex-direction:row; align-items:center;"> -->
@@ -56,7 +56,7 @@
     const movies_prime = await d3.csv("datasets/movies_prime.csv");
     const movies_disney = await d3.csv("datasets/movies_disney.csv");
     const top20_genres = await d3.csv("datasets/top20_genres.csv");
-    const yolk = await d3.csv("datasets/genre_ratings.csv");
+    const yolk = await d3.csv("datasets/median_ratings.csv");
 
     let topGenres = ['Drama','Comedy', 'Thriller', 'Action', 'Documentary', 'Family', 'Adventure', 'Fantasy'];
     let platforms = ["Netflix", "Hulu", "Prime", "Disney+"];

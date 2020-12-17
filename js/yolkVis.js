@@ -6,7 +6,7 @@ function drawYolkVis(svgClass, data, axes) {
     "circleHeight": 600,
     "margin": 40
   };
-  let levels = 4;
+  let levels = 5;
   let maxValue = 7;
   let dotRadius = 4;
   let platformColor = d3.scaleOrdinal().domain(['Disney+', 'Hulu', 'Netflix', 'Prime Video']).range(['#9e9e9e','#60EEA8','#ED535B','#4DC2EA']);
@@ -17,7 +17,7 @@ function drawYolkVis(svgClass, data, axes) {
   angleSlice = Math.PI * 2 / total;	//The width in radians of each "slice"
 
   // translate rating values to radius
-  var rScale = d3.scaleLinear().domain([5, 7]).range([0, radius]);
+  var rScale = d3.scaleLinear().domain([5, 7.5]).range([0, radius]);
 
   var svg = d3.select(svgClass);
   // .attr("class", "radar"+"#yolk");
@@ -76,8 +76,8 @@ function drawYolkVis(svgClass, data, axes) {
     .style("font-weight", "bold")
     .attr("text-anchor", "middle")
     .attr("dy", "0.35em")
-    .attr("x", (d, i) => rScale(maxValue * 1.05) * Math.cos(angleSlice*i - Math.PI/2))
-    .attr("y", (d, i) => rScale(maxValue * 1.05) * Math.sin(angleSlice*i - Math.PI/2))
+    .attr("x", (d, i) => rScale(maxValue * 1.13) * Math.cos(angleSlice*i - Math.PI/2))
+    .attr("y", (d, i) => rScale(maxValue * 1.13) * Math.sin(angleSlice*i - Math.PI/2))
     .text(d => d);
     // .call(wrap, wrapWidth);
 
@@ -176,7 +176,7 @@ function drawYolkVis(svgClass, data, axes) {
     .attr("r", dotRadius)
     .attr("cx", (d,i) => rScale(d.ratings) * Math.cos(angleSlice*i - Math.PI/2))
     .attr("cy", (d,i) => rScale(d.ratings) * Math.sin(angleSlice*i - Math.PI/2))
-    .style("fill", (d, i, j) =>platformColor(j) )
+    .style("fill", (d, i, j) => platformColor(j) )
     .style("fill-opacity", 0.8);
 
   //hovering interaction
@@ -200,10 +200,10 @@ function drawYolkVis(svgClass, data, axes) {
         newY =  parseFloat(d3.select(this).attr('cy')) - 10;
 
         tooltip.attr('x', newX)
-           .attr('y', newY)
-           .text(d.ratings)
-           .transition().duration(200)
-           .style('opacity', 1);
+               .attr('y', newY)
+               .text(d.ratings)
+               .transition().duration(200)
+               .style('opacity', 1);
       })
       .on("mouseout", function(){
         tooltip.transition().duration(200)
