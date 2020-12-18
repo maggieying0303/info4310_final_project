@@ -1,3 +1,45 @@
+// constants used in this visualization
+let platformMinPrice = {
+  "Netflix": 8.99,
+  "Hulu": 5.99,
+  "Prime": 8.99,
+  "Disney+": 6.99
+};
+let platformDetailPrice = {
+  "Netflix": {
+    "Basic": 8.99,
+    "Standard": 13.99,
+    "Premium": 17.99
+  },
+  "Hulu": {
+    "Basic": 5.99,
+    "Standard": 11.99,
+    "BasicTV": 54.99,
+    "StandardTV": 60.99
+  },
+  "Prime": {
+    "Basic": 8.99,
+    "Standard": 12.99
+  },
+  "Disney+": {
+    "Standard": 6.99,
+    "Bundle": 12.99
+  }
+};
+
+let isFilterWatchParty = false;
+let isFilterAddOn = false;
+let isFilterPayToWatch = false;
+
+// list of streaming platform that does not have requirement
+let filterButtonMap = {
+  "watch party": ["Netflix"],
+  "add ons": ["Netflix", "Disney+"],
+  "pay to watch": ["Netflix", "Hulu"]
+}
+
+let sliderUserPrice = 0;
+
 function drawSliderVis(svgClass) {
   let padding = 25;
   let sliderAttr = {
@@ -5,33 +47,6 @@ function drawSliderVis(svgClass) {
     "height": 700
   };
   let platforms = ["Netflix", "Hulu", "Prime", "Disney+"];
-  let platformMinPrice = {
-    "Netflix": 8.99,
-    "Hulu": 5.99,
-    "Prime": 12.99,
-    "Disney+": 6.99
-  };
-  let platformDetailPrice = {
-    "Netflix": {
-      "Basic": 8.99,
-      "Standard": 13.99,
-      "Premium": 17.99
-    },
-    "Hulu": {
-      "Basic": 5.99,
-      "Standard": 11.99,
-      "BasicTV": 54.99,
-      "StandardTV": 60.99
-    },
-    "Prime": {
-      "Basic": 8.99,
-      "Standard": 12.99
-    },
-    "Disney+": {
-      "Standard": 6.99,
-      "Bundle": 12.99
-    }
-  };
 
   let shortToLongNames = {
     "Hulu_Basic": "Basic",
@@ -79,7 +94,10 @@ function drawSliderVis(svgClass) {
       .attr("class", "track-overlay")
       .call(d3.drag()
           .on("start.interrupt", function() { slider.interrupt(); })
-          .on("start drag", function() { handleDrag(budgetScale.invert(d3.event.x)); }));
+          .on("start drag", function() {
+            sliderUserPrice = budgetScale.invert(d3.event.x)
+            handleDrag(sliderUserPrice);
+          }));
     // for x axis text label
     slider.insert("g", ".track-overlay")
       .attr("class", "ticks")
@@ -92,10 +110,13 @@ function drawSliderVis(svgClass) {
       .attr("height", padding)
       .attr("transform", "translate(" + padding*3 + "," + 0 + ")");
 
+    // add filter buttons after slider
+    addFilterButton(svg, padding*4, sliderAttr.height/4 + 30, "supports watch parties", "watch party");
+    addFilterButton(svg, sliderAttr.width/2 - padding*5, sliderAttr.height/4 + 30, "supports add-ons", "add ons")
+    addFilterButton(svg, sliderAttr.width/2 + padding*4, sliderAttr.height/4 + 30, "includes pay-to-watch content", "pay to watch")
 
     function handleDrag(userPrice) {
-      handle
-        .attr("x", budgetScale(userPrice)-padding*4);
+      handle.attr("x", budgetScale(userPrice)-padding*4);
 
       // show price tooltip on slider handle
       d3.select(".priceText").remove();
@@ -109,25 +130,8 @@ function drawSliderVis(svgClass) {
       // change opacity of text based on user selected price
       d3.selectAll(".platformText")
         .style("opacity", function(d) {
-          if (platformMinPrice[d] < userPrice) {
-            for (var plan in platformDetailPrice[d]) {
-              // console.log(platformDetailPrice[d]);
-              // console.log(plan)
-              if (platformDetailPrice[d][plan] < userPrice) {
-                d3.selectAll("#" + d.replace("+", "") + "_" + plan + "_text")
-                  .style("opacity", 1);
-              } else {
-                d3.selectAll("#" + d.replace("+", "") + "_" + plan + "_text")
-                  .style("opacity", 0.3);
-              }
-            }
-            return 1;
-          } else {
-            d3.selectAll("." + d.replace("+", "") + "_platformTextDetails")
-              .style("opacity", 0.3);
-            return 0.3;
-          }
-        })
+          return handleFiltering(userPrice, d);
+        });
     }
 
     // add budget title
@@ -205,7 +209,6 @@ function drawSliderVis(svgClass) {
               return sliderAttr.height*0.45 + yCount + 15*(i+1);
             })
             .text(function(d) {
-              // console.log(d)
               return d;
             })
             .style("text-anchor", "start")
@@ -215,4 +218,81 @@ function drawSliderVis(svgClass) {
       }
       count = count+1;
     }
+}
+
+function addFilterButton(svg, x, y, text, filterMapKey) {
+  let boxLength = 20;
+  svg.append("rect")
+    .attr("x", x)
+    .attr("y", y)
+    .attr("width", boxLength)
+    .attr("height", boxLength)
+    .attr("rx", 4)
+    .attr("ry", 4)
+    .style("stroke", "black")
+    .style("stroke-width", 3)
+    .style("fill", "white")
+    .on("mouseover", function() {
+      d3.select(this).style("cursor", "pointer");
+    })
+    .on("click", function() {
+      // toggle color of filter buttons
+      let currentColor = d3.select(this).style("fill");
+      if (currentColor == "white" || currentColor == "rgb(255, 255, 255)") {
+        d3.select(this)
+          .transition()
+          .duration(400)
+          .style("fill", "#a6a4a4");
+      } else {
+        d3.select(this)
+          .transition()
+          .duration(400)
+          .style("fill", "white");
+      }
+
+      // handle filtering
+      isFilterWatchParty = (filterMapKey == "watch party") ? !isFilterWatchParty : isFilterWatchParty;
+      isFilterAddOn = (filterMapKey == "add ons") ? !isFilterAddOn : isFilterAddOn;
+      isFilterPayToWatch = (filterMapKey == "pay to watch") ? !isFilterPayToWatch : isFilterPayToWatch;
+
+      // change opacity of text based on user selected price
+      d3.selectAll(".platformText")
+        .style("opacity", function(d) {
+          return handleFiltering(sliderUserPrice, d);
+        });
+
+    });
+  svg.append("text")
+    .attr("x", x + 25 + boxLength/2)
+    .attr("y", y + boxLength/2)
+    .text(text)
+    .style("alignment-baseline", "middle");
+}
+
+// d is the platform name
+function handleFiltering(userPrice, d) {
+  // build list of platforms that do not qualify for reqs
+  let banList = [];
+
+  banList = !isFilterWatchParty ? banList : banList.concat(filterButtonMap["watch party"]);
+  banList = !isFilterAddOn ? banList : banList.concat(filterButtonMap["add ons"]);
+  banList = !isFilterPayToWatch ? banList : banList.concat(filterButtonMap["pay to watch"]);
+
+  let banSet = new Set(banList);
+  if (platformMinPrice[d] < userPrice && !banSet.has(d)) {
+    for (var plan in platformDetailPrice[d]) {
+      if (platformDetailPrice[d][plan] < userPrice) {
+        d3.selectAll("#" + d.replace("+", "") + "_" + plan + "_text")
+          .style("opacity", 1);
+      } else {
+        d3.selectAll("#" + d.replace("+", "") + "_" + plan + "_text")
+          .style("opacity", 0.3);
+      }
+    }
+    return 1;
+  } else {
+    d3.selectAll("." + d.replace("+", "") + "_platformTextDetails")
+      .style("opacity", 0.3);
+    return 0.3;
+  }
 }
