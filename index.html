@@ -8,6 +8,7 @@
   <script type="text/javascript" src="js/sliderVis.js"></script>
   <script type="text/javascript" src="js/yolkVis.js"></script>
   <script type="text/javascript" src="js/barChartVis.js"></script>
+  <script type="text/javascript" src="js/doughnutVis.js"></script>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap" rel="stylesheet">
 
@@ -34,6 +35,8 @@
     <svg width="700" height="700" class="yolk"/>
     <div style="margin-left: 0px" id="yolk_hover"></div>
     <!-- </div> -->
+    <h2>movie top genres on streaming platforms</h2>
+    <svg width="1000" height="300" class="doughnut" style="margin-top: 50px;">
   </div>
     <svg width="1000" height="700" class="budgetslider"/>
   <div>
@@ -72,6 +75,7 @@
     drawBarChart(".barchart", topGenres, platforms, top20_genres);
     drawSliderVis(".budgetslider");
     drawYolkVis(".yolk", getYolkData(yolk), topGenres);
+    drawDoughnutVis(".doughnut", topGenres, platforms, top20_genres);
 
     // density charts
     // const dict = {'Disney+':{'order':4, 'dataset':movies_disney, 'color':'#000000','id':'#disney'},
