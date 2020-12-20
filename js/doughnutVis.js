@@ -3,6 +3,12 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
   let height = 250;
   let margin = 10;
 
+  let padding = 25;
+  let barAttr = {
+    "width": 900,
+    "height": 600
+  };
+
   var radius = Math.min(width, height) / 2 - margin; // radius is 1/2 smallest of width or height
   var innerRadius = 75;
 
@@ -77,27 +83,6 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
   // console.log("Data format:")
   // console.log(data_ready);
 
-  // // add platform names
-  // svg.selectAll("#totalText")
-  //   .data(platforms)
-  //   .enter()
-  //   .append("text")
-  //     .attr("x", d => xScale(totalMovies[d]) + padding/2)
-  //     .attr("y", (d, i) => yScale(i)+(padding*1.5)/2)
-  //     .text(d => totalMovies[d])
-  //     .style("font-weight", "bold")
-  //     .style("font-size", "20px");
-  // svg.selectAll("#textTitle")
-  //   .data(platforms)
-  //   .enter()
-  //   .append("text")
-  //     .attr("id", d => "totalText_" + d)
-  //     .attr("x", d => xScale(0))
-  //     .attr("y", (d, i) => yScale(i) + padding*2)
-  //     .text(d => d + ": " + data[selectedGenre][d] + " movies")
-  //     .style("font-weight", "bold")
-  //     .style("font-size", "20px");
-
   console.log("NEW IDEA")
   for (i in data_ready) {
     if (i == selectedGenre) {
@@ -112,7 +97,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                   .innerRadius(innerRadius)
                   .outerRadius(radius)
                )
-               .attr("transform", "translate(" + 0 + "," + 0 + ")")
+               .attr("transform", "translate(" + 0 + "," + 200 + ")")
                .attr('fill', function(d) {
                  return(netflixColor(d.data.key))
                })
@@ -125,7 +110,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
               .enter()
               .append('text')
                 .attr("x", -25)
-                .attr("y", 10)
+                .attr("y", 10 + 200)
                 .text(Math.round((data_ready[i][j][0].data.value /
                   totalMovies["Netflix"] * 100)).toString() + "%")
                 .style("font-weight", "bold")
@@ -137,7 +122,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
               .enter()
               .append('text')
                 .attr("x", -40) // manually adjusted centering
-                .attr("y", 160)
+                .attr("y", 160 + 200)
                 .text("Netflix")
                 .style("font-weight", "bold")
                 .style("font-size", "24px")
@@ -148,7 +133,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
               .enter()
               .append('text')
                 .attr("x", -80) // manually adjusted centering
-                .attr("y", 200)
+                .attr("y", 200 + 200)
                 .text((data_ready[i][j][0].data.value).toString() + " of " + totalMovies["Netflix"] + " movies")
                 .style("font-weight", "regular")
                 .style("font-size", "16")
@@ -165,7 +150,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                 .innerRadius(innerRadius)
                 .outerRadius(radius)
              )
-             .attr("transform", "translate(" + 250 + "," + 0 + ")")
+             .attr("transform", "translate(" + 250 + "," + 200 + ")")
              .attr('fill', function(d) {
                return(huluColor(d.data.key))
              })
@@ -178,7 +163,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
               .enter()
               .append('text')
                 .attr("x", -25+250) // based on relative position of next circle
-                .attr("y", 10)
+                .attr("y", 10 + 200)
                 .text(Math.round((data_ready[i][j][0].data.value /
                   totalMovies["Hulu"] * 100)).toString() + "%")
                 .style("font-weight", "bold")
@@ -190,7 +175,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                .enter()
                .append('text')
                  .attr("x", -40+260) // manually adjusted centering
-                 .attr("y", 160)
+                 .attr("y", 160 + 200)
                  .text("Hulu")
                  .style("font-weight", "bold")
                  .style("font-size", "24px")
@@ -201,7 +186,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                 .enter()
                 .append('text')
                   .attr("x", -80 + 260) // manually adjusted centering
-                  .attr("y", 200)
+                  .attr("y", 200 + 200)
                   .text((data_ready[i][j][0].data.value).toString() + " of " + totalMovies["Hulu"] + " movies")
                   .style("font-weight", "regular")
                   .style("font-size", "16")
@@ -218,7 +203,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                 .innerRadius(innerRadius)
                 .outerRadius(radius)
              )
-             .attr("transform", "translate(" + 500 + "," + 0 + ")")
+             .attr("transform", "translate(" + 500 + "," + 200 + ")")
              .attr('fill', function(d) {
                return(disneyColor(d.data.key))
              })
@@ -231,7 +216,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
               .enter()
               .append('text')
                 .attr("x", -25+250+250) // based on relative position of next circle
-                .attr("y", 10)
+                .attr("y", 10 + 200)
                 .text(Math.round((data_ready[i][j][0].data.value /
                   totalMovies["Disney+"] * 100)).toString() + "%")
                 .style("font-weight", "bold")
@@ -242,8 +227,8 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                .data(data_ready[i][j])
                .enter()
                .append('text')
-                 .attr("x", -40+260+240) // manually adjusted centering
-                 .attr("y", 160)
+                 .attr("x", -40+260+230) // manually adjusted centering
+                 .attr("y", 160 + 200)
                  .text("Disney+")
                  .style("font-weight", "bold")
                  .style("font-size", "24px")
@@ -253,8 +238,8 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                 .data(data_ready[i][j])
                 .enter()
                 .append('text')
-                  .attr("x", -80 + 260 + 260) // manually adjusted centering
-                  .attr("y", 200)
+                  .attr("x", -80 + 260 + 250) // manually adjusted centering
+                  .attr("y", 200 + 200)
                   .text((data_ready[i][j][0].data.value).toString() + " of " + totalMovies["Disney+"] + " movies")
                   .style("font-weight", "regular")
                   .style("font-size", "16")
@@ -271,7 +256,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                 .innerRadius(innerRadius)
                 .outerRadius(radius)
              )
-             .attr("transform", "translate(" + 750 + "," + 0 + ")")
+             .attr("transform", "translate(" + 750 + "," + 200 + ")")
              .attr('fill', function(d) {
                return(primeColor(d.data.key))
              })
@@ -284,7 +269,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
               .enter()
               .append('text')
                 .attr("x", -25+250+250+250) // based on relative position of next circle
-                .attr("y", 10)
+                .attr("y", 10 + 200)
                 .text(Math.round((data_ready[i][j][0].data.value /
                   totalMovies["Prime"] * 100)).toString() + "%")
                 .style("font-weight", "bold")
@@ -296,7 +281,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                .enter()
                .append('text')
                  .attr("x", -40+260+240+250) // manually adjusted centering
-                 .attr("y", 160)
+                 .attr("y", 160 + 200)
                  .text("Prime")
                  .style("font-weight", "bold")
                  .style("font-size", "24px")
@@ -307,7 +292,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                 .enter()
                 .append('text')
                   .attr("x", -80 + 260 + 260 + 225) // manually adjusted centering
-                  .attr("y", 200)
+                  .attr("y", 200 + 200)
                   .text((data_ready[i][j][0].data.value).toString() + " of " + totalMovies["Prime"] + " movies")
                   .style("font-weight", "regular")
                   .style("font-size", "16")
@@ -318,6 +303,45 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
     }
   }
 
+  // filter buttons
+  svg.selectAll("#buttons")
+    .data(topGenres)
+    .enter()
+    .append("rect")
+    .attr("class", "filterButton")
+    .attr("x", (d, i) => (barAttr.width/4)*(Math.trunc((i)/2))+padding*2 - 100)
+    .attr("y", function (d,i) {
+      if (i % 2 == 0) {
+        return padding*2 - 150;
+      } else {
+        return padding*4 - 150;
+      }
+    })
+    .attr("height", padding*1.5)
+    .attr("width", padding*6)
+    .style("fill", (d, i) => i == 0 ? "#a6a4a4" : "#dadada")
+    .style("stroke", (d, i) => i==0 ? "black" : "none")
+    .style("stroke-width", (d, i) => i==0 ? "3px" : "0px")
+    .style("cursor", "pointer")
+    .style("rx", 5)
+
+  // filter button labels
+  svg.selectAll("#buttonText")
+    .data(topGenres)
+    .enter()
+    .append("text")
+      .attr("x", (d, i) => (barAttr.width/4)*(Math.trunc((i)/2))+padding*5 - 100)
+      .attr("y", function (d,i) {
+        if (i % 2 == 0) {
+          return padding*2+(padding*1.75)/2 - 150;
+        } else {
+          return padding*4+(padding*1.75)/2 - 150;
+        }
+      })
+      .text(d => d)
+      .style("font-size", "16px")
+      .style("font-weight", "bold")
+      .style("text-anchor", "middle");
   // draw color rect for transitions
   // svg.selectAll("#colorRect")
   //   .data(platforms)
