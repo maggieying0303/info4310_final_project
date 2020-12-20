@@ -27,6 +27,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
               .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
   let selectedGenre = "Drama";
+
   console.log("initial:")
   console.log(selectedGenre);
 
@@ -61,10 +62,10 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                         .range(['#60EEA8', '#FFFFFF']);
   let disneyColor = d3.scaleOrdinal()
                         .domain(['Disney+', 'Disney+_Remainder'])
-                        .range(['#4DC2EA', '#FFFFFF']);
+                        .range(['#9e9e9e', '#FFFFFF']);
   let primeColor = d3.scaleOrdinal()
                         .domain(['Prime', 'Prime_Remainder'])
-                        .range(['#9e9e9e', '#FFFFFF']);
+                        .range(['#4DC2EA', '#FFFFFF']);
 
   // Compute the position of each group on the pie:
   var pie = d3.pie()
@@ -109,7 +110,12 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
       console.log(selectedGenre);
 
       // clear the previously drawn doughnuts
+      svg.selectAll('#colorPie').remove();
+      svg.selectAll('.percentText').remove();
+      svg.selectAll('.captionText').remove();
+      svg.selectAll('.metadata').remove();
 
+      draw();
 
       // change color of filter button
       d3.selectAll(".filterButton")
@@ -141,7 +147,9 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
       .style("font-weight", "bold")
       .style("text-anchor", "middle");
 
+
   // drawing proportions of each doughnut for given genre
+  function draw() {
   for (i in data_ready) {
     if (i == selectedGenre) {
       for (j in data_ready[selectedGenre]) {
@@ -171,28 +179,31 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                 .attr("y", 10 + 200)
                 .text(Math.round((data_ready[i][j][0].data.value /
                   totalMovies["Netflix"] * 100)).toString() + "%")
+                .attr("class", "percentText")
                 .style("font-weight", "bold")
                 .style("font-size", "24px")
                 .style("text-align", "center")
 
-           svg.selectAll('captionText')
+           svg.selectAll('#captionText')
               .data(data_ready[i][j])
               .enter()
               .append('text')
                 .attr("x", -40) // manually adjusted centering
                 .attr("y", 160 + 200)
                 .text("Netflix")
+                .attr("class", "captionText")
                 .style("font-weight", "bold")
                 .style("font-size", "24px")
                 .style("text-align", "center")
 
-           svg.selectAll('metadata')
+           svg.selectAll('#metadata')
               .data(data_ready[i][j])
               .enter()
               .append('text')
                 .attr("x", -80) // manually adjusted centering
                 .attr("y", 200 + 200)
                 .text((data_ready[i][j][0].data.value).toString() + " of " + totalMovies["Netflix"] + " movies")
+                .attr("class", "metadata")
                 .style("font-weight", "regular")
                 .style("font-size", "16")
                 .style("text-align", "center")
@@ -224,6 +235,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                 .attr("y", 10 + 200)
                 .text(Math.round((data_ready[i][j][0].data.value /
                   totalMovies["Hulu"] * 100)).toString() + "%")
+                .attr("class", "percentText")
                 .style("font-weight", "bold")
                 .style("font-size", "24px")
                 .style("text-align", "center")
@@ -235,6 +247,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                  .attr("x", -40+260) // manually adjusted centering
                  .attr("y", 160 + 200)
                  .text("Hulu")
+                 .attr("class", "captionText")
                  .style("font-weight", "bold")
                  .style("font-size", "24px")
                  .style("text-align", "center")
@@ -246,6 +259,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                   .attr("x", -80 + 260) // manually adjusted centering
                   .attr("y", 200 + 200)
                   .text((data_ready[i][j][0].data.value).toString() + " of " + totalMovies["Hulu"] + " movies")
+                  .attr("class", "metadata")
                   .style("font-weight", "regular")
                   .style("font-size", "16")
                   .style("text-align", "center")
@@ -277,6 +291,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                 .attr("y", 10 + 200)
                 .text(Math.round((data_ready[i][j][0].data.value /
                   totalMovies["Disney+"] * 100)).toString() + "%")
+                .attr("class", "percentText")
                 .style("font-weight", "bold")
                 .style("font-size", "24px")
                 .style("text-align", "center")
@@ -288,6 +303,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                  .attr("x", -40+260+230) // manually adjusted centering
                  .attr("y", 160 + 200)
                  .text("Disney+")
+                 .attr("class", "captionText")
                  .style("font-weight", "bold")
                  .style("font-size", "24px")
                  .style("text-align", "center")
@@ -299,6 +315,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                   .attr("x", -80 + 260 + 250) // manually adjusted centering
                   .attr("y", 200 + 200)
                   .text((data_ready[i][j][0].data.value).toString() + " of " + totalMovies["Disney+"] + " movies")
+                  .attr("class", "metadata")
                   .style("font-weight", "regular")
                   .style("font-size", "16")
                   .style("text-align", "center")
@@ -330,6 +347,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                 .attr("y", 10 + 200)
                 .text(Math.round((data_ready[i][j][0].data.value /
                   totalMovies["Prime"] * 100)).toString() + "%")
+                .attr("class", "percentText")
                 .style("font-weight", "bold")
                 .style("font-size", "24px")
                 .style("text-align", "center")
@@ -341,6 +359,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                  .attr("x", -40+260+240+250) // manually adjusted centering
                  .attr("y", 160 + 200)
                  .text("Prime")
+                 .attr("class", "captionText")
                  .style("font-weight", "bold")
                  .style("font-size", "24px")
                  .style("text-align", "center")
@@ -352,6 +371,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                   .attr("x", -80 + 260 + 260 + 225) // manually adjusted centering
                   .attr("y", 200 + 200)
                   .text((data_ready[i][j][0].data.value).toString() + " of " + totalMovies["Prime"] + " movies")
+                  .attr("class", "metadata")
                   .style("font-weight", "regular")
                   .style("font-size", "16")
                   .style("text-align", "center")
@@ -360,6 +380,9 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
       }
     }
   }
+  }
+  // initialize Drama
+  draw();
 }
 
 function parseGenreData(topGenres, top20_genres) {
