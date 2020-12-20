@@ -27,6 +27,8 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
               .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
   let selectedGenre = "Drama";
+  console.log("initial:")
+  console.log(selectedGenre);
 
   let data = parseGenreData(topGenres, top20_genres);
 
@@ -50,11 +52,6 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
       }
     }
   }
-  // console.log("huh")
-  // console.log(genreList[selectedGenre]);
-  // for (x in genreList[selectedGenre]) {
-  //   if ()
-  // }
 
   let netflixColor = d3.scaleOrdinal()
                         .domain(['Netflix', 'Netflix_Remainder'])
@@ -83,7 +80,68 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
   // console.log("Data format:")
   // console.log(data_ready);
 
-  console.log("NEW IDEA")
+  console.log(topGenres)
+  // filter buttons
+  svg.selectAll("#buttons")
+    .data(topGenres)
+    .enter()
+    .append("rect")
+    .attr("class", "filterButton")
+    .attr("x", (d, i) => (barAttr.width/4)*(Math.trunc((i)/2))+padding*2 - 100)
+    .attr("y", function (d,i) {
+      if (i % 2 == 0) {
+        return padding*2 - 150;
+      } else {
+        return padding*4 - 150;
+      }
+    })
+    .attr("height", padding*1.5)
+    .attr("width", padding*6)
+    .style("fill", (d, i) => i == 0 ? "#a6a4a4" : "#dadada")
+    .style("stroke", (d, i) => i==0 ? "black" : "none")
+    .style("stroke-width", (d, i) => i==0 ? "3px" : "0px")
+    .style("cursor", "pointer")
+    .style("rx", 5)
+    .on("click", function(d) {
+      // set the selected genre to be what's clicked
+      selectedGenre = d;
+      console.log("new:")
+      console.log(selectedGenre);
+
+      // clear the previously drawn doughnuts
+
+
+      // change color of filter button
+      d3.selectAll(".filterButton")
+        .style("fill", "#dadada")
+        .style("stroke", "none");
+      d3.select(this)
+        .transition()
+        .duration(300)
+        .style("fill", "#A6A4A4")
+        .style("stroke", "black")
+        .style("stroke-width", "3px");
+    })
+
+  // filter button labels
+  svg.selectAll("#buttonText")
+    .data(topGenres)
+    .enter()
+    .append("text")
+      .attr("x", (d, i) => (barAttr.width/4)*(Math.trunc((i)/2))+padding*5 - 100)
+      .attr("y", function (d,i) {
+        if (i % 2 == 0) {
+          return padding*2+(padding*1.75)/2 - 150;
+        } else {
+          return padding*4+(padding*1.75)/2 - 150;
+        }
+      })
+      .text(d => d)
+      .style("font-size", "16px")
+      .style("font-weight", "bold")
+      .style("text-anchor", "middle");
+
+  // drawing proportions of each doughnut for given genre
   for (i in data_ready) {
     if (i == selectedGenre) {
       for (j in data_ready[selectedGenre]) {
@@ -302,157 +360,6 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
       }
     }
   }
-
-  // filter buttons
-  svg.selectAll("#buttons")
-    .data(topGenres)
-    .enter()
-    .append("rect")
-    .attr("class", "filterButton")
-    .attr("x", (d, i) => (barAttr.width/4)*(Math.trunc((i)/2))+padding*2 - 100)
-    .attr("y", function (d,i) {
-      if (i % 2 == 0) {
-        return padding*2 - 150;
-      } else {
-        return padding*4 - 150;
-      }
-    })
-    .attr("height", padding*1.5)
-    .attr("width", padding*6)
-    .style("fill", (d, i) => i == 0 ? "#a6a4a4" : "#dadada")
-    .style("stroke", (d, i) => i==0 ? "black" : "none")
-    .style("stroke-width", (d, i) => i==0 ? "3px" : "0px")
-    .style("cursor", "pointer")
-    .style("rx", 5)
-
-  // filter button labels
-  svg.selectAll("#buttonText")
-    .data(topGenres)
-    .enter()
-    .append("text")
-      .attr("x", (d, i) => (barAttr.width/4)*(Math.trunc((i)/2))+padding*5 - 100)
-      .attr("y", function (d,i) {
-        if (i % 2 == 0) {
-          return padding*2+(padding*1.75)/2 - 150;
-        } else {
-          return padding*4+(padding*1.75)/2 - 150;
-        }
-      })
-      .text(d => d)
-      .style("font-size", "16px")
-      .style("font-weight", "bold")
-      .style("text-anchor", "middle");
-  // draw color rect for transitions
-  // svg.selectAll("#colorRect")
-  //   .data(platforms)
-  //   .enter()
-  //   .append("rect")
-  //     .attr("id", d => "rect_"+d.replace("+", ""))
-  //     .attr("x", d => xScale(0))
-  //     .attr("y", (d, i) => yScale(i))
-  //     .attr("height", yScale.bandwidth())
-  //     .attr("width", function(d, i) {
-  //       return xScale(data[selectedGenre][d]) - xScale(0);
-  //     })
-  //     .style("fill", (d,i) => platformColor(i));
-  // svg.selectAll("#textRect")
-  //   .data(platforms)
-  //   .enter()
-  //   .append("rect")
-  //     .attr("x", d => xScale(0))
-  //     .attr("y", (d, i) => yScale(i))
-  //     .attr("height", yScale.bandwidth())
-  //     .attr("width", function(d, i) {
-  //       return xScale(totalMovies[d]) - xScale(0);
-  //     })
-  //     .style("fill", "none")
-  //     .style("stroke", "black")
-  //     .style("stroke-width", 4);
-  // // add platform names
-  // svg.selectAll("#totalText")
-  //   .data(platforms)
-  //   .enter()
-  //   .append("text")
-  //     .attr("x", d => xScale(totalMovies[d]) + padding/2)
-  //     .attr("y", (d, i) => yScale(i)+(padding*1.5)/2)
-  //     .text(d => totalMovies[d])
-  //     .style("font-weight", "bold")
-  //     .style("font-size", "20px");
-  // svg.selectAll("#textTitle")
-  //   .data(platforms)
-  //   .enter()
-  //   .append("text")
-  //     .attr("id", d => "totalText_" + d)
-  //     .attr("x", d => xScale(0))
-  //     .attr("y", (d, i) => yScale(i) + padding*2)
-  //     .text(d => d + ": " + data[selectedGenre][d] + " movies")
-  //     .style("font-weight", "bold")
-  //     .style("font-size", "20px");
-  //
-  // // add filter buttons
-  // svg.selectAll("#buttons")
-  //   .data(topGenres)
-  //   .enter()
-  //   .append("rect")
-  //   .attr("class", "filterButton")
-  //   .attr("x", (d, i) => (barAttr.width/4)*(Math.trunc((i)/2))+padding*2)
-  //   .attr("y", function (d,i) {
-  //     if (i % 2 == 0) {
-  //       return padding*2;
-  //     } else {
-  //       return padding*4;
-  //     }
-  //   })
-  //   .attr("height", padding*1.5)
-  //   .attr("width", padding*6)
-  //   .style("fill", (d, i) => i == 0 ? "#a6a4a4" : "#dadada")
-  //   .style("stroke", (d, i) => i==0 ? "black" : "none")
-  //   .style("stroke-width", (d, i) => i==0 ? "3px" : "0px")
-  //   .style("cursor", "pointer")
-  //   .style("rx", 5)
-  //   .on("click", function(d) {
-  //     // transition colored rect
-  //     for (var p of platforms) {
-  //       d3.select("#rect_"+p.replace("+", ""))
-  //         .transition()
-  //         .duration(500)
-  //         .attr("width", xScale(data[d][p]) - xScale(0));
-  //
-  //       // change total text
-  //       d3.select("#totalText_" + p.replace("+", ""))
-  //         .transition()
-  //         .duration(200)
-  //         .text(p + ": " + data[d][p.replace("+", "")] + " movies");
-  //     }
-  //
-  //     // change color of filter button
-  //     d3.selectAll(".filterButton")
-  //       .style("fill", "#dadada")
-  //       .style("stroke", "none");
-  //     d3.select(this)
-  //       .transition()
-  //       .duration(300)
-  //       .style("fill", "#A6A4A4")
-  //       .style("stroke", "black")
-  //       .style("stroke-width", "3px");
-  //   });
-  // // add filter button labels
-  // svg.selectAll("#buttonText")
-  //   .data(topGenres)
-  //   .enter()
-  //   .append("text")
-  //     .attr("x", (d, i) => (barAttr.width/4)*(Math.trunc((i)/2))+padding*5)
-  //     .attr("y", function (d,i) {
-  //       if (i % 2 == 0) {
-  //         return padding*2+(padding*1.75)/2;
-  //       } else {
-  //         return padding*4+(padding*1.75)/2;
-  //       }
-  //     })
-  //     .text(d => d)
-  //     .style("font-size", "16px")
-  //     .style("font-weight", "bold")
-  //     .style("text-anchor", "middle");
 }
 
 function parseGenreData(topGenres, top20_genres) {
