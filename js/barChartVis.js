@@ -52,26 +52,21 @@ function drawBarChart(svgClass, topGenres, platforms, top20_genres) {
       })
       .style("fill", "none")
       .style("stroke", "black")
-      .style("stroke-width", 4);
-  // add platform names
-  svg.selectAll("#totalText")
-    .data(platforms)
-    .enter()
-    .append("text")
-      .attr("x", d => xScale(totalMovies[d]) + padding/2)
-      .attr("y", (d, i) => yScale(i)+(padding*1.5)/2)
-      .text(d => totalMovies[d])
-      .style("font-weight", "bold")
-      .style("font-size", "20px");
+      .style("stroke-width", "3px");
   svg.selectAll("#textTitle")
     .data(platforms)
     .enter()
     .append("text")
-      .attr("id", d => "totalText_" + d)
+      .attr("id", d => "totalText_" + d.replace("+", ""))
       .attr("x", d => xScale(0))
       .attr("y", (d, i) => yScale(i) + padding*2)
-      .text(d => d + ": " + data[selectedGenre][d] + " movies")
+      .text(d => d + ": " + data[selectedGenre][d])
       .style("font-weight", "bold")
+      .style("font-size", "20px")
+      .append("tspan")
+      .attr("id", d => "tspan_" + d.replace("+", ""))
+      .text(d => " / " + totalMovies[d] + " movies")
+      .style("fill", "#A6A4A4")
       .style("font-size", "20px");
 
   // add filter buttons
@@ -90,9 +85,9 @@ function drawBarChart(svgClass, topGenres, platforms, top20_genres) {
     })
     .attr("height", padding*1.5)
     .attr("width", padding*6)
-    .style("fill", (d, i) => i == 0 ? "#a6a4a4" : "#dadada")
-    .style("stroke", (d, i) => i==0 ? "black" : "none")
-    .style("stroke-width", (d, i) => i==0 ? "3px" : "0px")
+    .style("fill", (d, i) => i == 0 ? "#a6a4a4" : "#ffffff")
+    .style("stroke", "black")
+    .style("stroke-width", "3px")
     .style("cursor", "pointer")
     .style("rx", 5)
     .on("click", function(d) {
@@ -104,16 +99,26 @@ function drawBarChart(svgClass, topGenres, platforms, top20_genres) {
           .attr("width", xScale(data[d][p]) - xScale(0));
 
         // change total text
-        d3.select("#totalText_" + p.replace("+", ""))
-          .transition()
-          .duration(200)
-          .text(p + ": " + data[d][p.replace("+", "")] + " movies");
+        d3.select("#totalText_" + p.replace("+", "")).remove();
+        svg.append("text")
+            .attr("id", "totalText_" + p.replace("+", ""))
+            .attr("x", xScale(0))
+            .attr("y", yScale(platforms.indexOf(p)) + padding*2)
+            .text(p + ": " + data[d][p])
+            .style("font-weight", "bold")
+            .style("font-size", "20px")
+            .append("tspan")
+            .attr("id", "tspan_" + p.replace("+", ""))
+            .text(" / " + totalMovies[p] + " movies")
+            .style("fill", "#A6A4A4")
+            .style("font-size", "20px");
       }
 
       // change color of filter button
       d3.selectAll(".filterButton")
-        .style("fill", "#dadada")
-        .style("stroke", "none");
+        .style("fill", "#ffffff")
+        .style("stroke", "black")
+        .style("stroke-width", "3px");
       d3.select(this)
         .transition()
         .duration(300)
