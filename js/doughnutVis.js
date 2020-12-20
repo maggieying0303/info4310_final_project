@@ -44,8 +44,11 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
       }
     }
   }
-  console.log("huh")
-  console.log(genreList);
+  // console.log("huh")
+  // console.log(genreList[selectedGenre]);
+  // for (x in genreList[selectedGenre]) {
+  //   if ()
+  // }
 
   let netflixColor = d3.scaleOrdinal()
                         .domain(['Netflix', 'Netflix_Remainder'])
@@ -73,15 +76,27 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
   }
   // console.log("Data format:")
   // console.log(data_ready);
-  //
-  console.log("TESTING AREA")
-  for (j in data_ready["Drama"]) {
-    console.log(data_ready["Drama"][j][0].data.key == "Netflix")
-    if (data_ready["Drama"][j][0].data.key == "Netflix") {
-        // console.log(data_ready["Drama"][j][0].data.key);
-        console.log("success! just one time")
-    }
-  }
+
+  // // add platform names
+  // svg.selectAll("#totalText")
+  //   .data(platforms)
+  //   .enter()
+  //   .append("text")
+  //     .attr("x", d => xScale(totalMovies[d]) + padding/2)
+  //     .attr("y", (d, i) => yScale(i)+(padding*1.5)/2)
+  //     .text(d => totalMovies[d])
+  //     .style("font-weight", "bold")
+  //     .style("font-size", "20px");
+  // svg.selectAll("#textTitle")
+  //   .data(platforms)
+  //   .enter()
+  //   .append("text")
+  //     .attr("id", d => "totalText_" + d)
+  //     .attr("x", d => xScale(0))
+  //     .attr("y", (d, i) => yScale(i) + padding*2)
+  //     .text(d => d + ": " + data[selectedGenre][d] + " movies")
+  //     .style("font-weight", "bold")
+  //     .style("font-size", "20px");
 
   console.log("NEW IDEA")
   for (i in data_ready) {
@@ -103,7 +118,42 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                })
                .attr("stroke", "black")
                .attr("stroke-width", "2px")
-               .style("opacity", 0.7)
+               .style("opacity", 1)
+
+           svg.selectAll('#percentText')
+              .data(data_ready[i][j])
+              .enter()
+              .append('text')
+                .attr("x", -25)
+                .attr("y", 10)
+                .text(Math.round((data_ready[i][j][0].data.value /
+                  totalMovies["Netflix"] * 100)).toString() + "%")
+                .style("font-weight", "bold")
+                .style("font-size", "24px")
+                .style("text-align", "center")
+
+           svg.selectAll('captionText')
+              .data(data_ready[i][j])
+              .enter()
+              .append('text')
+                .attr("x", -40) // manually adjusted centering
+                .attr("y", 160)
+                .text("Netflix")
+                .style("font-weight", "bold")
+                .style("font-size", "24px")
+                .style("text-align", "center")
+
+           svg.selectAll('metadata')
+              .data(data_ready[i][j])
+              .enter()
+              .append('text')
+                .attr("x", -80) // manually adjusted centering
+                .attr("y", 200)
+                .text((data_ready[i][j][0].data.value).toString() + " of " + totalMovies["Netflix"] + " movies")
+                .style("font-weight", "regular")
+                .style("font-size", "16")
+                .style("text-align", "center")
+                .style("opacity", 0.6)
         }
         else if (data_ready[i][j][0].data.key == "Hulu") {
           // draw prop of doughnut
@@ -121,7 +171,42 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
              })
              .attr("stroke", "black")
              .attr("stroke-width", "2px")
-             .style("opacity", 0.7)
+             .style("opacity", 1)
+
+           svg.selectAll('#percentText')
+              .data(data_ready[i][j])
+              .enter()
+              .append('text')
+                .attr("x", -25+250) // based on relative position of next circle
+                .attr("y", 10)
+                .text(Math.round((data_ready[i][j][0].data.value /
+                  totalMovies["Hulu"] * 100)).toString() + "%")
+                .style("font-weight", "bold")
+                .style("font-size", "24px")
+                .style("text-align", "center")
+
+            svg.selectAll('captionText')
+               .data(data_ready[i][j])
+               .enter()
+               .append('text')
+                 .attr("x", -40+260) // manually adjusted centering
+                 .attr("y", 160)
+                 .text("Hulu")
+                 .style("font-weight", "bold")
+                 .style("font-size", "24px")
+                 .style("text-align", "center")
+
+             svg.selectAll('metadata')
+                .data(data_ready[i][j])
+                .enter()
+                .append('text')
+                  .attr("x", -80 + 260) // manually adjusted centering
+                  .attr("y", 200)
+                  .text((data_ready[i][j][0].data.value).toString() + " of " + totalMovies["Hulu"] + " movies")
+                  .style("font-weight", "regular")
+                  .style("font-size", "16")
+                  .style("text-align", "center")
+                  .style("opacity", 0.6)
         }
         else if (data_ready[i][j][0].data.key == "Disney+") {
           // draw prop of doughnut
@@ -139,7 +224,42 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
              })
              .attr("stroke", "black")
              .attr("stroke-width", "2px")
-             .style("opacity", 0.7)
+             .style("opacity", 1)
+
+           svg.selectAll('#percentText')
+              .data(data_ready[i][j])
+              .enter()
+              .append('text')
+                .attr("x", -25+250+250) // based on relative position of next circle
+                .attr("y", 10)
+                .text(Math.round((data_ready[i][j][0].data.value /
+                  totalMovies["Disney+"] * 100)).toString() + "%")
+                .style("font-weight", "bold")
+                .style("font-size", "24px")
+                .style("text-align", "center")
+
+            svg.selectAll('captionText')
+               .data(data_ready[i][j])
+               .enter()
+               .append('text')
+                 .attr("x", -40+260+240) // manually adjusted centering
+                 .attr("y", 160)
+                 .text("Disney+")
+                 .style("font-weight", "bold")
+                 .style("font-size", "24px")
+                 .style("text-align", "center")
+
+             svg.selectAll('metadata')
+                .data(data_ready[i][j])
+                .enter()
+                .append('text')
+                  .attr("x", -80 + 260 + 260) // manually adjusted centering
+                  .attr("y", 200)
+                  .text((data_ready[i][j][0].data.value).toString() + " of " + totalMovies["Disney+"] + " movies")
+                  .style("font-weight", "regular")
+                  .style("font-size", "16")
+                  .style("text-align", "center")
+                  .style("opacity", 0.6)
         }
         else {
           // draw prop of doughnut
@@ -157,64 +277,46 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
              })
              .attr("stroke", "black")
              .attr("stroke-width", "2px")
-             .style("opacity", 0.7)
+             .style("opacity", 1)
+
+           svg.selectAll('#percentText')
+              .data(data_ready[i][j])
+              .enter()
+              .append('text')
+                .attr("x", -25+250+250+250) // based on relative position of next circle
+                .attr("y", 10)
+                .text(Math.round((data_ready[i][j][0].data.value /
+                  totalMovies["Prime"] * 100)).toString() + "%")
+                .style("font-weight", "bold")
+                .style("font-size", "24px")
+                .style("text-align", "center")
+
+            svg.selectAll('captionText')
+               .data(data_ready[i][j])
+               .enter()
+               .append('text')
+                 .attr("x", -40+260+240+250) // manually adjusted centering
+                 .attr("y", 160)
+                 .text("Prime")
+                 .style("font-weight", "bold")
+                 .style("font-size", "24px")
+                 .style("text-align", "center")
+
+             svg.selectAll('metadata')
+                .data(data_ready[i][j])
+                .enter()
+                .append('text')
+                  .attr("x", -80 + 260 + 260 + 225) // manually adjusted centering
+                  .attr("y", 200)
+                  .text((data_ready[i][j][0].data.value).toString() + " of " + totalMovies["Prime"] + " movies")
+                  .style("font-weight", "regular")
+                  .style("font-size", "16")
+                  .style("text-align", "center")
+                  .style("opacity", 0.6)
         }
       }
     }
   }
-
-  // for (i in data_ready) {
-  //   if (i == selectedGenre) {
-  //     // draw prop of doughnut
-  //     svg.selectAll('#colorPie')
-  //        .data(data_ready[selectedGenre])
-  //        .enter()
-  //        .append('path')
-  //        .attr('d', d3.arc()
-  //           .innerRadius(100)
-  //           .outerRadius(radius)
-  //        )
-  //        .attr('fill', function(d) {
-  //          for (j in data_ready[selectedGenre]) {
-  //            if (data_ready[selectedGenre][j][0].data.key == "Netflix") {
-  //              return(netflixColor(d[j].data.key))
-  //            }
-  //          }
-  //        })
-  //        .attr("stroke", "black")
-  //        .attr("stroke-width", "2px")
-  //        .style("opacity", 0.7)
-  //   }
-  // }
-
-  // draw proportions of doughnut
-  // svg.selectAll("#colorPie")
-  //    // .data(data_ready)
-  //    .data(data_ready["Drama"][0])
-  //    .enter()
-  //    .append('path')
-  //    .attr('d', d3.arc()
-  //       .innerRadius(100)
-  //       .outerRadius(radius)
-  //    )
-  //    .attr('fill', function(d) {
-  //      return(netflixColor(d.data.key))
-  //      // for (i in data_ready) {
-  //      //   if (i == selectedGenre) {
-  //      //     for (j in data_ready[i]) {
-  //      //       if (data_ready[i][j][0].data.key == "Netflix") {
-  //      //         return(netflixColor(d[i][j].data.key))
-  //      //       }
-  //      //     }
-  //      //   }
-  //      // }
-  //    })
-  //    .attr("stroke", "black")
-  //    .attr("stroke-width", "2px")
-  //    .style("opacity", 0.7)
-
-
-
 
   // draw color rect for transitions
   // svg.selectAll("#colorRect")
