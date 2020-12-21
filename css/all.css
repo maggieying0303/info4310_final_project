@@ -23,3 +23,9 @@ body {
 
 .handle {
 }
+
+.maintext {
+  margin-left: 20rem;
+  margin-right: 20rem;
+  text-align: left;
+}
