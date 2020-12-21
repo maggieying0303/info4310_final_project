@@ -87,16 +87,24 @@ function drawYolkVis(svgClass, data, axes) {
     .angle((d,i) => i*angleSlice)
     .curve(d3.curveCardinalClosed);
 
-  // if(roundStrokes) {
-  //   radarLine.curve(d3.curveCardinalClosed);
-  // }
-
   // Create a wrapper for the blobs
   var blobWrapper = g.selectAll(".radarWrapper")
      .data(data)
      .enter()
      .append("g")
      .attr("class", "radarWrapper");
+
+ var newTooltip = d3.select("body")
+     .append("div")
+     .attr("class", "tooltip")
+     .style("padding", "15px")
+     .style("position", "absolute")
+     .style("z-index", "10")
+     .style("visibility", "hidden")
+     .attr("white-space", "pre-line")
+     .style("background-color", "#ffffff")
+     .style("border-radius", "10px")
+     .style("border", "3px solid black");
 
   blobWrapper.append("path")
     .attr("class", "radarArea")
@@ -118,32 +126,25 @@ function drawYolkVis(svgClass, data, axes) {
         d3.select(this)
           .transition().duration(200)
           .style("fill-opacity", 0.7);
-
+      })
+      .on("mousemove", function(d, i) {
         let dict = { 0:["Disney+", "Documentary", "Comedy"], 1:["Hulu", "Documentary", "Family"], 2:["Netflix","Documentary", "Thriller"], 3:["Prime Video", "Documentary", "Thriller"]};
 
-        d3.select("#yolk_hover")
-          .append("text")
-          .attr("class", "yolk_hover_text")
-          .style("text-align", "center")
-          .style("font-size", "20px")
-          .style("font-weight", "bold")
-          .style("display", "block")
-          .style("margin-bottom", "10px")
-          .text(dict[i][0]);
+        var htmlText = "<b>" + dict[i][0] + "</b>"
+          + "<br><br><b>Highest rated genre: </b>" + dict[i][1]
+          + "<br><br><b>Lowest rated genre: </b>" + dict[i][2];
 
-        d3.select("#yolk_hover")
-          .append("text")
-          .attr("class", "yolk_hover_text")
-          .style("display", "block")
-          .style("margin-bottom", "10px")
-          .text("Highest rated genre: " + dict[i][1])
-
-        d3.select("#yolk_hover")
-          .append("text")
-          .attr("class", "yolk_hover_text")
-          .style("display", "block")
-          .style("margin-bottom", "10px")
-          .text("Lowest rated genre: " + dict[i][2])
+        newTooltip
+            .html(htmlText)
+            .style("text-align", "left")
+            .style("visibility", "visible")
+            .style("top", function() {
+              return (d3.event.clientY < 550
+                ? event.pageY + 20 + "px" : event.pageY - 90 + "px");
+            })
+            .style("left", function() {
+                return event.pageX + 30 + "px";
+            });
       })
       .on('mouseout', function(){
         //Bring back all blobs
@@ -156,8 +157,10 @@ function drawYolkVis(svgClass, data, axes) {
           .transition().duration(200)
           .style("opacity", 1);
 
-        d3.selectAll(".yolk_hover_text")
-          .text("")
+        newTooltip.style("visibility", "hidden");
+
+        // d3.selectAll(".yolk_hover_text")
+        //   .text("")
      });
 
   //Create the outlines
@@ -199,21 +202,21 @@ function drawYolkVis(svgClass, data, axes) {
         newX =  parseFloat(d3.select(this).attr('cx')) - 10;
         newY =  parseFloat(d3.select(this).attr('cy')) - 10;
 
-        tooltip.attr('x', newX)
-               .attr('y', newY)
-               .text(d.ratings)
-               .transition().duration(200)
-               .style('opacity', 1);
+        // tooltip.attr('x', newX)
+        //        .attr('y', newY)
+        //        .text(d.ratings)
+        //        .transition().duration(200)
+        //        .style('opacity', 1);
       })
       .on("mouseout", function(){
-        tooltip.transition().duration(200)
-           .style("opacity", 0);
+        // tooltip.transition().duration(200)
+        //    .style("opacity", 0);
       });
 
 
-    var tooltip = g.append("text")
-       .attr("class", "tooltip")
-       .style("opacity", 0);
+    // var tooltip = g.append("text")
+    //    .attr("class", "tooltip")
+    //    .style("opacity", 0);
 
 
   // helper function
