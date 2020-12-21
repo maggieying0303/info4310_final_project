@@ -87,7 +87,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
     .data(topGenres)
     .enter()
     .append("rect")
-    .attr("class", "filterButton")
+    .attr("class", "filterButton2")
     .attr("x", (d, i) => (barAttr.width/4)*(Math.trunc((i)/2))+padding*2 - 100)
     .attr("y", function (d,i) {
       if (i % 2 == 0) {
@@ -98,9 +98,9 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
     })
     .attr("height", padding*1.5)
     .attr("width", padding*6)
-    .style("fill", (d, i) => i == 0 ? "#a6a4a4" : "#dadada")
-    .style("stroke", (d, i) => i==0 ? "black" : "none")
-    .style("stroke-width", (d, i) => i==0 ? "3px" : "0px")
+    .style("fill", (d, i) => i == 0 ? "#a6a4a4" : "#ffffff")
+    .style("stroke", "black")
+    .style("stroke-width", "3px")
     .style("cursor", "pointer")
     .style("rx", 5)
     .on("click", function(d) {
@@ -118,9 +118,10 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
       draw();
 
       // change color of filter button
-      d3.selectAll(".filterButton")
-        .style("fill", "#dadada")
-        .style("stroke", "none");
+      d3.selectAll(".filterButton2")
+        .style("fill", "#ffffff")
+        .style("stroke", "black")
+        .style("stroke-width", "3px");
       d3.select(this)
         .transition()
         .duration(300)
