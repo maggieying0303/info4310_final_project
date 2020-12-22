@@ -409,7 +409,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
      let percentage = platformNum[0]["value"] / (platformNum[0]["value"] + platformNum[1]["value"]);
      let index = topGenrePieOrder.indexOf(platform);
      if (percentage > 0.42) {
-       drawTopGenreTag(svg, visWidth/4 * (index) - 60);
+       drawTopGenreTag(svg, "topGenre_" + topGenrePieOrder[count].replace("+", ""), visWidth/4 * (index) - 60);
      }
      count = count + 1;
    }
@@ -425,15 +425,25 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
         .style("fill-opacity", 0.2)
         .style("opacity", 0.2);
 
-        d3.selectAll("#disney_donut")
-          .transition().duration(200)
-          .style("fill-opacity", 0.2)
-          .style("opacity", 0.2);
+      d3.selectAll("#disney_donut")
+        .transition().duration(200)
+        .style("fill-opacity", 0.2)
+        .style("opacity", 0.2);
 
-          d3.selectAll("#prime_donut")
-            .transition().duration(200)
-            .style("fill-opacity", 0.2)
-            .style("opacity", 0.2);
+      d3.selectAll("#prime_donut")
+        .transition().duration(200)
+        .style("fill-opacity", 0.2)
+        .style("opacity", 0.2);
+
+      d3.selectAll(".topGenreTag")
+        .transition().duration(200)
+        .style("fill-opacity", 0.2)
+        .style("opacity", 0.2);
+
+      d3.selectAll("#topGenre_Netflix")
+        .transition().duration(200)
+        .style("fill-opacity", 1)
+        .style("opacity", 1);
 
     })
     .on('mouseout', function(){
@@ -442,15 +452,20 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
         .style("fill-opacity", 1)
         .style("opacity", 1);
 
-        d3.selectAll("#disney_donut")
-          .transition().duration(200)
-          .style("fill-opacity", 1)
-          .style("opacity", 1);
+      d3.selectAll("#disney_donut")
+        .transition().duration(200)
+        .style("fill-opacity", 1)
+        .style("opacity", 1);
 
-          d3.selectAll("#prime_donut")
-            .transition().duration(200)
-            .style("fill-opacity", 0.2)
-            .style("opacity", 0.2);
+      d3.selectAll("#prime_donut")
+        .transition().duration(200)
+        .style("fill-opacity", 0.2)
+        .style("opacity", 0.2);
+
+      d3.selectAll(".topGenreTag")
+        .transition().duration(200)
+        .style("fill-opacity", 1)
+        .style("opacity", 1);
     });
 
     d3.selectAll(".prime_hover_donut")
@@ -461,15 +476,25 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
           .style("fill-opacity", 0.2)
           .style("opacity", 0.2);
 
-          d3.selectAll("#disney_donut")
-            .transition().duration(200)
-            .style("fill-opacity", 0.2)
-            .style("opacity", 0.2);
+        d3.selectAll("#disney_donut")
+          .transition().duration(200)
+          .style("fill-opacity", 0.2)
+          .style("opacity", 0.2);
 
-            d3.selectAll("#hulu_donut")
-              .transition().duration(200)
-              .style("fill-opacity", 0.2)
-              .style("opacity", 0.2);
+        d3.selectAll("#hulu_donut")
+          .transition().duration(200)
+          .style("fill-opacity", 0.2)
+          .style("opacity", 0.2);
+
+        d3.selectAll(".topGenreTag")
+          .transition().duration(200)
+          .style("fill-opacity", 0.2)
+          .style("opacity", 0.2);
+
+        d3.selectAll("#topGenre_Prime")
+          .transition().duration(200)
+          .style("fill-opacity", 1)
+          .style("opacity", 1);
 
       })
       .on('mouseout', function(){
@@ -478,15 +503,20 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
           .style("fill-opacity", 1)
           .style("opacity", 1);
 
-          d3.selectAll("#disney_donut")
-            .transition().duration(200)
-            .style("fill-opacity", 1)
-            .style("opacity", 1);
+        d3.selectAll("#disney_donut")
+          .transition().duration(200)
+          .style("fill-opacity", 1)
+          .style("opacity", 1);
 
-            d3.selectAll("#hulu_donut")
-              .transition().duration(200)
-              .style("fill-opacity", 1)
-              .style("opacity", 1);
+        d3.selectAll("#hulu_donut")
+          .transition().duration(200)
+          .style("fill-opacity", 1)
+          .style("opacity", 1);
+
+        d3.selectAll(".topGenreTag")
+          .transition().duration(200)
+          .style("fill-opacity", 1)
+          .style("opacity", 1);
       });
 
       d3.selectAll(".disney_hover_donut")
@@ -497,15 +527,25 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
             .style("fill-opacity", 0.2)
             .style("opacity", 0.2);
 
-            d3.selectAll("#prime_donut")
-              .transition().duration(200)
-              .style("fill-opacity", 0.2)
-              .style("opacity", 0.2);
+          d3.selectAll("#prime_donut")
+            .transition().duration(200)
+            .style("fill-opacity", 0.2)
+            .style("opacity", 0.2);
 
-              d3.selectAll("#hulu_donut")
-                .transition().duration(200)
-                .style("fill-opacity", 0.2)
-                .style("opacity", 0.2);
+          d3.selectAll("#hulu_donut")
+            .transition().duration(200)
+            .style("fill-opacity", 0.2)
+            .style("opacity", 0.2);
+
+          d3.selectAll(".topGenreTag")
+            .transition().duration(200)
+            .style("fill-opacity", 0.2)
+            .style("opacity", 0.2);
+
+          d3.selectAll("#topGenre_Disney")
+            .transition().duration(200)
+            .style("fill-opacity", 1)
+            .style("opacity", 1);
 
         })
         .on('mouseout', function(){
@@ -514,15 +554,20 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
             .style("fill-opacity", 1)
             .style("opacity", 1);
 
-            d3.selectAll("#prime_donut")
-              .transition().duration(200)
-              .style("fill-opacity", 1)
-              .style("opacity", 1);
+          d3.selectAll("#prime_donut")
+            .transition().duration(200)
+            .style("fill-opacity", 1)
+            .style("opacity", 1);
 
-              d3.selectAll("#hulu_donut")
-                .transition().duration(200)
-                .style("fill-opacity", 1)
-                .style("opacity", 1);
+          d3.selectAll("#hulu_donut")
+            .transition().duration(200)
+            .style("fill-opacity", 1)
+            .style("opacity", 1);
+
+          d3.selectAll(".topGenreTag")
+            .transition().duration(200)
+            .style("fill-opacity", 1)
+            .style("opacity", 1);
         });
 
         d3.selectAll(".hulu_hover_donut")
@@ -533,15 +578,25 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
               .style("fill-opacity", 0.2)
               .style("opacity", 0.2);
 
-              d3.selectAll("#prime_donut")
-                .transition().duration(200)
-                .style("fill-opacity", 0.2)
-                .style("opacity", 0.2);
+            d3.selectAll("#prime_donut")
+              .transition().duration(200)
+              .style("fill-opacity", 0.2)
+              .style("opacity", 0.2);
 
-                d3.selectAll("#disney_donut")
-                  .transition().duration(200)
-                  .style("fill-opacity", 0.2)
-                  .style("opacity", 0.2);
+            d3.selectAll("#disney_donut")
+              .transition().duration(200)
+              .style("fill-opacity", 0.2)
+              .style("opacity", 0.2);
+
+            d3.selectAll(".topGenreTag")
+              .transition().duration(200)
+              .style("fill-opacity", 0.2)
+              .style("opacity", 0.2);
+
+            d3.selectAll("#topGenre_Hulu")
+              .transition().duration(200)
+              .style("fill-opacity", 1)
+              .style("opacity", 1);
 
           })
           .on('mouseout', function(){
@@ -550,15 +605,20 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
               .style("fill-opacity", 1)
               .style("opacity", 1);
 
-              d3.selectAll("#prime_donut")
+            d3.selectAll("#prime_donut")
+              .transition().duration(200)
+              .style("fill-opacity", 1)
+              .style("opacity", 1);
+
+            d3.selectAll("#disney_donut")
+              .transition().duration(200)
+              .style("fill-opacity", 1)
+              .style("opacity", 1);
+
+              d3.selectAll(".topGenreTag")
                 .transition().duration(200)
                 .style("fill-opacity", 1)
                 .style("opacity", 1);
-
-                d3.selectAll("#disney_donut")
-                  .transition().duration(200)
-                  .style("fill-opacity", 1)
-                  .style("opacity", 1);
           });
 
 }
@@ -580,22 +640,30 @@ function parseGenreData(topGenres, top20_genres) {
   return final;
 }
 
-function drawTopGenreTag(svg, x) {
-  svg.append("rect")
+function drawTopGenreTag(svg, id, x) {
+  svg.append("image")
     .attr("class", "topGenreTag")
+    .attr("id", id)
     .attr("x", x)
     .attr("y", 430)
     .attr("width", 120)
     .attr("height", 50)
-    .style("rx", 10)
-    .style("fill", "#d3d3d3")
-    .style("stroke", "black")
-    .style("stroke-width", "3px");
-  svg.append("text")
-    .attr("class", "topGenreTag")
-    .attr("x", x + 60)
-    .attr("y", 430 + 25 + 5)
-    .text("Top Genre")
-    .style("text-anchor", "middle")
-    .style("font-weight", "bold");
+    .attr("xlink:href", "pics/topGenreStub.png")
+  // svg.append("rect")
+  //   .attr("class", "topGenreTag")
+  //   .attr("x", x)
+  //   .attr("y", 430)
+  //   .attr("width", 120)
+  //   .attr("height", 50)
+  //   .style("rx", 10)
+  //   .style("fill", "#d3d3d3")
+  //   .style("stroke", "black")
+  //   .style("stroke-width", "3px");
+  // svg.append("text")
+  //   .attr("class", "topGenreTag")
+  //   .attr("x", x + 60)
+  //   .attr("y", 430 + 25 + 5)
+  //   .text("Top Genre")
+  //   .style("text-anchor", "middle")
+  //   .style("font-weight", "bold");
 }
