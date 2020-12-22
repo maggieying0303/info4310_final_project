@@ -171,6 +171,8 @@ function drawYolkVis(svgClass, data, axes) {
   d3.selectAll(".prime_hover")
     .on('mouseover', function(){
 
+      console.log("prime hover");
+
       d3.selectAll(".radarArea")
         .transition().duration(200)
         .style("fill-opacity", 0.1);

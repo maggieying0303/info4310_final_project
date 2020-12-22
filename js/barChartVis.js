@@ -46,6 +46,7 @@ function drawBarChart(svgClass, topGenres, platforms, top20_genres) {
     .append("rect")
       .attr("x", d => xScale(0))
       .attr("y", (d, i) => yScale(i))
+      .attr("id", d => "outline_" + d.replace("+", ""))
       .attr("height", yScale.bandwidth())
       .attr("width", function(d, i) {
         return xScale(totalMovies[d]) - xScale(0);
@@ -161,6 +162,30 @@ function drawBarChart(svgClass, topGenres, platforms, top20_genres) {
             .transition().duration(200)
             .style("fill-opacity", 0.3);
 
+            d3.select("#totalText_Disney")
+              .transition().duration(200)
+              .style("fill-opacity", 0.3);
+
+            d3.select("#totalText_Prime")
+              .transition().duration(200)
+              .style("fill-opacity", 0.3);
+
+            d3.select("#totalText_Hulu")
+              .transition().duration(200)
+              .style("fill-opacity", 0.3);
+
+              d3.select("#outline_Disney")
+                .transition().duration(200)
+                .style("opacity", 0.3);
+
+              d3.select("#outline_Prime")
+                .transition().duration(200)
+                .style("opacity", 0.3);
+
+              d3.select("#outline_Hulu")
+                .transition().duration(200)
+                .style("opacity", 0.3);
+
         })
         .on('mouseout', function(){
 
@@ -176,9 +201,32 @@ function drawBarChart(svgClass, topGenres, platforms, top20_genres) {
             .transition().duration(200)
             .style("fill-opacity", 1);
 
+            d3.select("#totalText_Disney")
+              .transition().duration(200)
+              .style("fill-opacity", 1);
+
+            d3.select("#totalText_Prime")
+              .transition().duration(200)
+              .style("fill-opacity", 1);
+
+            d3.select("#totalText_Hulu")
+              .transition().duration(200)
+              .style("fill-opacity", 1);
+
+              d3.select("#outline_Disney")
+                .transition().duration(200)
+                .style("opacity", 1);
+
+              d3.select("#outline_Prime")
+                .transition().duration(200)
+                .style("opacity", 1);
+
+              d3.select("#outline_Hulu")
+                .transition().duration(200)
+                .style("opacity", 1);
         });
 
-        d3.selectAll(".hulu_hover")
+        d3.selectAll(".hulu_hover_bar")
           .on('mouseover', function(){
 
             d3.select("#rect_Disney")
@@ -192,6 +240,30 @@ function drawBarChart(svgClass, topGenres, platforms, top20_genres) {
             d3.select("#rect_Netflix")
               .transition().duration(200)
               .style("fill-opacity", 0.3);
+
+              d3.select("#totalText_Disney")
+                .transition().duration(200)
+                .style("fill-opacity", 0.3);
+
+              d3.select("#totalText_Prime")
+                .transition().duration(200)
+                .style("fill-opacity", 0.3);
+
+              d3.select("#totalText_Netflix")
+                .transition().duration(200)
+                .style("fill-opacity", 0.3);
+
+                d3.select("#outline_Disney")
+                  .transition().duration(200)
+                  .style("opacity", 0.3);
+
+                d3.select("#outline_Prime")
+                  .transition().duration(200)
+                  .style("opacity", 0.3);
+
+                d3.select("#outline_Netflix")
+                  .transition().duration(200)
+                  .style("opacity", 0.3);
 
           })
           .on('mouseout', function(){
@@ -208,9 +280,32 @@ function drawBarChart(svgClass, topGenres, platforms, top20_genres) {
               .transition().duration(200)
               .style("fill-opacity", 1);
 
+              d3.select("#totalText_Disney")
+                .transition().duration(200)
+                .style("fill-opacity", 1);
+
+              d3.select("#totalText_Prime")
+                .transition().duration(200)
+                .style("fill-opacity", 1);
+
+              d3.select("#totalText_Netflix")
+                .transition().duration(200)
+                .style("fill-opacity", 1);
+
+                d3.select("#outline_Disney")
+                  .transition().duration(200)
+                  .style("opacity", 1);
+
+                d3.select("#outline_Prime")
+                  .transition().duration(200)
+                  .style("opacity", 1);
+
+                d3.select("#outline_Netflix")
+                  .transition().duration(200)
+                  .style("opacity", 1);
           });
 
-          d3.selectAll(".disney_hover")
+          d3.selectAll(".disney_hover_bar")
             .on('mouseover', function(){
 
               console.log("hoho");
@@ -227,6 +322,30 @@ function drawBarChart(svgClass, topGenres, platforms, top20_genres) {
                 .transition().duration(200)
                 .style("fill-opacity", 0.3);
 
+                d3.select("#totalText_Hulu")
+                  .transition().duration(200)
+                  .style("fill-opacity", 0.3);
+
+                d3.select("#totalText_Prime")
+                  .transition().duration(200)
+                  .style("fill-opacity", 0.3);
+
+                d3.select("#totalText_Netflix")
+                  .transition().duration(200)
+                  .style("fill-opacity", 0.3);
+
+                  d3.select("#outline_Netflix")
+                    .transition().duration(200)
+                    .style("opacity", 0.3);
+
+                  d3.select("#outline_Prime")
+                    .transition().duration(200)
+                    .style("opacity", 0.3);
+
+                  d3.select("#outline_Hulu")
+                    .transition().duration(200)
+                    .style("opacity", 0.3);
+
             })
             .on('mouseout', function(){
 
@@ -242,9 +361,32 @@ function drawBarChart(svgClass, topGenres, platforms, top20_genres) {
                 .transition().duration(200)
                 .style("fill-opacity", 1);
 
+                d3.select("#totalText_Hulu")
+                  .transition().duration(200)
+                  .style("fill-opacity", 1);
+
+                d3.select("#totalText_Prime")
+                  .transition().duration(200)
+                  .style("fill-opacity", 1);
+
+                d3.select("#totalText_Netflix")
+                  .transition().duration(200)
+                  .style("fill-opacity", 1);
+
+                  d3.select("#outline_Netflix")
+                    .transition().duration(200)
+                    .style("opacity", 1);
+
+                  d3.select("#outline_Prime")
+                    .transition().duration(200)
+                    .style("opacity", 1);
+
+                  d3.select("#outline_Hulu")
+                    .transition().duration(200)
+                    .style("opacity", 1);
             });
 
-            d3.selectAll(".prime_hover")
+            d3.selectAll(".prime_hover_bar")
               .on('mouseover', function(){
 
                 console.log("okok");
@@ -261,6 +403,31 @@ function drawBarChart(svgClass, topGenres, platforms, top20_genres) {
                   .transition().duration(200)
                   .style("fill-opacity", 0.3);
 
+                  d3.select("#totalText_Disney")
+                    .transition().duration(200)
+                    .style("fill-opacity", 0.3);
+
+                  d3.select("#totalText_Netflix")
+                    .transition().duration(200)
+                    .style("fill-opacity", 0.3);
+
+                  d3.select("#totalText_Netflix")
+                    .transition().duration(200)
+                    .style("fill-opacity", 0.3);
+
+                    d3.select("#outline_Disney")
+                      .transition().duration(200)
+                      .style("opacity", 0.3);
+
+                    d3.select("#outline_Netflix")
+                      .transition().duration(200)
+                      .style("opacity", 0.3);
+
+                    d3.select("#outline_Hulu")
+                      .transition().duration(200)
+                      .style("opacity", 0.3);
+
+
               })
               .on('mouseout', function(){
 
@@ -275,6 +442,30 @@ function drawBarChart(svgClass, topGenres, platforms, top20_genres) {
                 d3.select("#rect_Hulu")
                   .transition().duration(200)
                   .style("fill-opacity", 1);
+
+                  d3.select("#totalText_Disney")
+                    .transition().duration(200)
+                    .style("fill-opacity", 1);
+
+                  d3.select("#totalText_Netflix")
+                    .transition().duration(200)
+                    .style("fill-opacity", 1);
+
+                  d3.select("#totalText_Netflix")
+                    .transition().duration(200)
+                    .style("fill-opacity", 1);
+
+                    d3.select("#outline_Disney")
+                      .transition().duration(200)
+                      .style("opacity", 1);
+
+                    d3.select("#outline_Netflix")
+                      .transition().duration(200)
+                      .style("opacity", 1);
+
+                    d3.select("#outline_Hulu")
+                      .transition().duration(200)
+                      .style("opacity", 1);
 
               });
 }
