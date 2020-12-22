@@ -109,6 +109,10 @@ function drawYolkVis(svgClass, data, axes) {
   blobWrapper.append("path")
     .attr("class", "radarArea")
     .attr("d", d => radarLine(d) )
+    .attr("id", function (d, i){
+      let dict = { 0:"disney", 1:"hulu", 2:"netflix", 3:"prime"};
+      return dict[i]+"_blob";
+    })
     .style("fill", (d,i) => platformColor(i))
     .style("fill-opacity", 0.15)
     .on('mouseover', function (d,i) {
@@ -162,6 +166,88 @@ function drawYolkVis(svgClass, data, axes) {
         // d3.selectAll(".yolk_hover_text")
         //   .text("")
      });
+
+  // text hover effect
+  d3.selectAll(".prime_hover")
+    .on('mouseover', function(){
+
+      d3.selectAll(".radarArea")
+        .transition().duration(200)
+        .style("fill-opacity", 0.1);
+
+      //dim the outlines as well
+      d3.selectAll(".radarStroke")
+        .transition().duration(200)
+        .style("opacity", 0.2);
+
+      d3.select("#prime_blob")
+        .transition().duration(200)
+        .style("fill-opacity", 0.7);
+    })
+    .on('mouseout', function(){
+      d3.selectAll(".radarArea")
+        .transition().duration(200)
+        .style("fill-opacity", 0.15);
+
+      //bring back stroke-width
+      d3.selectAll(".radarStroke")
+        .transition().duration(200)
+        .style("opacity", 1);
+    });
+
+    d3.selectAll(".netflix_hover")
+      .on('mouseover', function(){
+
+        d3.selectAll(".radarArea")
+          .transition().duration(200)
+          .style("fill-opacity", 0.1);
+
+        //dim the outlines as well
+        d3.selectAll(".radarStroke")
+          .transition().duration(200)
+          .style("opacity", 0.2);
+
+        d3.select("#netflix_blob")
+          .transition().duration(200)
+          .style("fill-opacity", 0.7);
+      })
+      .on('mouseout', function(){
+        d3.selectAll(".radarArea")
+          .transition().duration(200)
+          .style("fill-opacity", 0.15);
+
+        //bring back stroke-width
+        d3.selectAll(".radarStroke")
+          .transition().duration(200)
+          .style("opacity", 1);
+      });
+
+      d3.selectAll(".disney_hover")
+        .on('mouseover', function(){
+
+          d3.selectAll(".radarArea")
+            .transition().duration(200)
+            .style("fill-opacity", 0.1);
+
+          //dim the outlines as well
+          d3.selectAll(".radarStroke")
+            .transition().duration(200)
+            .style("opacity", 0.2);
+
+          d3.select("#disney_blob")
+            .transition().duration(200)
+            .style("fill-opacity", 0.7);
+        })
+        .on('mouseout', function(){
+          d3.selectAll(".radarArea")
+            .transition().duration(200)
+            .style("fill-opacity", 0.15);
+
+          //bring back stroke-width
+          d3.selectAll(".radarStroke")
+            .transition().duration(200)
+            .style("opacity", 1);
+        });
 
   //Create the outlines
   blobWrapper.append("path")
