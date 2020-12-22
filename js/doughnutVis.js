@@ -455,7 +455,7 @@ function drawTopGenreTag(svg, x) {
     .attr("width", 120)
     .attr("height", 50)
     .style("rx", 10)
-    .style("fill", "#a6a4a4")
+    .style("fill", "#d3d3d3")
     .style("stroke", "black")
     .style("stroke-width", "3px");
   svg.append("text")
