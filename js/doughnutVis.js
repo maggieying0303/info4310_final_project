@@ -163,8 +163,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                .data(data_ready[i][j])
                .enter()
                .append('path')
-               .attr("class", "netflix_donut")
-               .attr("class", "donut")
+               .attr("id", "netflix_donut")
                .attr('d', d3.arc()
                   .innerRadius(innerRadius)
                   .outerRadius(radius)
@@ -181,13 +180,12 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
               .data(data_ready[i][j])
               .enter()
               .append('text')
-              .attr("class", "netflix_donut")
-              .attr("class", "donut")
                 .attr("x", -25)
                 .attr("y", 10 + 200)
                 .text(Math.round((data_ready[i][j][0].data.value /
                   totalMovies["Netflix"] * 100)).toString() + "%")
                 .attr("class", "percentText")
+                .attr("id", "netflix_donut")
                 .style("font-weight", "bold")
                 .style("font-size", "24px")
                 .style("text-align", "center")
@@ -196,12 +194,11 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
               .data(data_ready[i][j])
               .enter()
               .append('text')
-              .attr("class", "netflix_donut")
-              .attr("class", "donut")
                 .attr("x", -40) // manually adjusted centering
                 .attr("y", 160 + 200)
                 .text("Netflix")
                 .attr("class", "captionText")
+                .attr("id", "netflix_donut")
                 .style("font-weight", "bold")
                 .style("font-size", "24px")
                 .style("text-align", "center")
@@ -210,37 +207,16 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
               .data(data_ready[i][j])
               .enter()
               .append('text')
-              .attr("class", "netflix_donut")
-              .attr("class", "donut")
                 .attr("x", -80) // manually adjusted centering
                 .attr("y", 200 + 200)
                 .text((data_ready[i][j][0].data.value).toString() + " of " + totalMovies["Netflix"] + " movies")
                 .attr("class", "metadata")
+                .attr("id", "netflix_donut")
                 .style("font-weight", "regular")
                 .style("font-size", "16")
                 .style("text-align", "center")
                 .style("opacity", 0.6)
 
-                //text hover effect
-                d3.selectAll(".netflix_hover")
-                  .on('mouseover', function(){
-
-                    console.log("hover");
-
-                    // d3.selectAll("#colorPie")
-                    //   .transition().duration(200)
-                    //   .style("opacity", 0.1);
-
-                    d3.selectAll(".netflix_donut")
-                      .transition().duration(200)
-                      .style("opacity", 0.1);
-                  })
-                  .on('mouseout', function(){
-                    // d3.selectAll(".donut")
-                    //   .transition().duration(200)
-                    //   .style("opacity", 1);
-
-                  });
         }
         else if (data_ready[i][j][0].data.key == "Hulu") {
           // draw prop of doughnut
@@ -252,6 +228,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                 .innerRadius(innerRadius)
                 .outerRadius(radius)
              )
+             .attr("id", "hulu_donut")
              .attr("transform", "translate(" + 250 + "," + 200 + ")")
              .attr('fill', function(d) {
                return(huluColor(d.data.key))
@@ -269,6 +246,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                 .text(Math.round((data_ready[i][j][0].data.value /
                   totalMovies["Hulu"] * 100)).toString() + "%")
                 .attr("class", "percentText")
+                .attr("id", "hulu_donut")
                 .style("font-weight", "bold")
                 .style("font-size", "24px")
                 .style("text-align", "center")
@@ -281,6 +259,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                  .attr("y", 160 + 200)
                  .text("Hulu")
                  .attr("class", "captionText")
+                 .attr("id", "hulu_donut")
                  .style("font-weight", "bold")
                  .style("font-size", "24px")
                  .style("text-align", "center")
@@ -293,6 +272,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                   .attr("y", 200 + 200)
                   .text((data_ready[i][j][0].data.value).toString() + " of " + totalMovies["Hulu"] + " movies")
                   .attr("class", "metadata")
+                  .attr("id", "hulu_donut")
                   .style("font-weight", "regular")
                   .style("font-size", "16")
                   .style("text-align", "center")
@@ -308,6 +288,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                 .innerRadius(innerRadius)
                 .outerRadius(radius)
              )
+             .attr("id", "disney_donut")
              .attr("transform", "translate(" + 500 + "," + 200 + ")")
              .attr('fill', function(d) {
                return(disneyColor(d.data.key))
@@ -325,6 +306,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                 .text(Math.round((data_ready[i][j][0].data.value /
                   totalMovies["Disney+"] * 100)).toString() + "%")
                 .attr("class", "percentText")
+                .attr("id", "disney_donut")
                 .style("font-weight", "bold")
                 .style("font-size", "24px")
                 .style("text-align", "center")
@@ -337,6 +319,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                  .attr("y", 160 + 200)
                  .text("Disney+")
                  .attr("class", "captionText")
+                 .attr("id", "disney_donut")
                  .style("font-weight", "bold")
                  .style("font-size", "24px")
                  .style("text-align", "center")
@@ -349,6 +332,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                   .attr("y", 200 + 200)
                   .text((data_ready[i][j][0].data.value).toString() + " of " + totalMovies["Disney+"] + " movies")
                   .attr("class", "metadata")
+                  .attr("id", "disney_donut")
                   .style("font-weight", "regular")
                   .style("font-size", "16")
                   .style("text-align", "center")
@@ -370,6 +354,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
              })
              .attr("stroke", "black")
              .attr("stroke-width", "3px")
+             .attr("id", "prime_donut")
              .style("opacity", 1)
 
            svg.selectAll('#percentText')
@@ -381,6 +366,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                 .text(Math.round((data_ready[i][j][0].data.value /
                   totalMovies["Prime"] * 100)).toString() + "%")
                 .attr("class", "percentText")
+                .attr("id", "prime_donut")
                 .style("font-weight", "bold")
                 .style("font-size", "24px")
                 .style("text-align", "center")
@@ -393,6 +379,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                  .attr("y", 160 + 200)
                  .text("Prime")
                  .attr("class", "captionText")
+                 .attr("id", "prime_donut")
                  .style("font-weight", "bold")
                  .style("font-size", "24px")
                  .style("text-align", "center")
@@ -405,6 +392,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                   .attr("y", 200 + 200)
                   .text((data_ready[i][j][0].data.value).toString() + " of " + totalMovies["Prime"] + " movies")
                   .attr("class", "metadata")
+                  .attr("id", "prime_donut")
                   .style("font-weight", "regular")
                   .style("font-size", "16")
                   .style("text-align", "center")
@@ -428,6 +416,151 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
   }
   // initialize Drama
   draw();
+
+  d3.selectAll(".netflix_hover_donut")
+    .on('mouseover', function(){
+
+      d3.selectAll("#hulu_donut")
+        .transition().duration(200)
+        .style("fill-opacity", 0.2)
+        .style("opacity", 0.2);
+
+        d3.selectAll("#disney_donut")
+          .transition().duration(200)
+          .style("fill-opacity", 0.2)
+          .style("opacity", 0.2);
+
+          d3.selectAll("#prime_donut")
+            .transition().duration(200)
+            .style("fill-opacity", 0.2)
+            .style("opacity", 0.2);
+
+    })
+    .on('mouseout', function(){
+      d3.selectAll("#hulu_donut")
+        .transition().duration(200)
+        .style("fill-opacity", 1)
+        .style("opacity", 1);
+
+        d3.selectAll("#disney_donut")
+          .transition().duration(200)
+          .style("fill-opacity", 1)
+          .style("opacity", 1);
+
+          d3.selectAll("#prime_donut")
+            .transition().duration(200)
+            .style("fill-opacity", 0.2)
+            .style("opacity", 0.2);
+    });
+
+    d3.selectAll(".prime_hover_donut")
+      .on('mouseover', function(){
+
+        d3.selectAll("#netflix_donut")
+          .transition().duration(200)
+          .style("fill-opacity", 0.2)
+          .style("opacity", 0.2);
+
+          d3.selectAll("#disney_donut")
+            .transition().duration(200)
+            .style("fill-opacity", 0.2)
+            .style("opacity", 0.2);
+
+            d3.selectAll("#hulu_donut")
+              .transition().duration(200)
+              .style("fill-opacity", 0.2)
+              .style("opacity", 0.2);
+
+      })
+      .on('mouseout', function(){
+        d3.selectAll("#netflix_donut")
+          .transition().duration(200)
+          .style("fill-opacity", 1)
+          .style("opacity", 1);
+
+          d3.selectAll("#disney_donut")
+            .transition().duration(200)
+            .style("fill-opacity", 1)
+            .style("opacity", 1);
+
+            d3.selectAll("#hulu_donut")
+              .transition().duration(200)
+              .style("fill-opacity", 1)
+              .style("opacity", 1);
+      });
+
+      d3.selectAll(".disney_hover_donut")
+        .on('mouseover', function(){
+
+          d3.selectAll("#netflix_donut")
+            .transition().duration(200)
+            .style("fill-opacity", 0.2)
+            .style("opacity", 0.2);
+
+            d3.selectAll("#prime_donut")
+              .transition().duration(200)
+              .style("fill-opacity", 0.2)
+              .style("opacity", 0.2);
+
+              d3.selectAll("#hulu_donut")
+                .transition().duration(200)
+                .style("fill-opacity", 0.2)
+                .style("opacity", 0.2);
+
+        })
+        .on('mouseout', function(){
+          d3.selectAll("#netflix_donut")
+            .transition().duration(200)
+            .style("fill-opacity", 1)
+            .style("opacity", 1);
+
+            d3.selectAll("#prime_donut")
+              .transition().duration(200)
+              .style("fill-opacity", 1)
+              .style("opacity", 1);
+
+              d3.selectAll("#hulu_donut")
+                .transition().duration(200)
+                .style("fill-opacity", 1)
+                .style("opacity", 1);
+        });
+
+        d3.selectAll(".hulu_hover_donut")
+          .on('mouseover', function(){
+
+            d3.selectAll("#netflix_donut")
+              .transition().duration(200)
+              .style("fill-opacity", 0.2)
+              .style("opacity", 0.2);
+
+              d3.selectAll("#prime_donut")
+                .transition().duration(200)
+                .style("fill-opacity", 0.2)
+                .style("opacity", 0.2);
+
+                d3.selectAll("#disney_donut")
+                  .transition().duration(200)
+                  .style("fill-opacity", 0.2)
+                  .style("opacity", 0.2);
+
+          })
+          .on('mouseout', function(){
+            d3.selectAll("#netflix_donut")
+              .transition().duration(200)
+              .style("fill-opacity", 1)
+              .style("opacity", 1);
+
+              d3.selectAll("#prime_donut")
+                .transition().duration(200)
+                .style("fill-opacity", 1)
+                .style("opacity", 1);
+
+                d3.selectAll("#disney_donut")
+                  .transition().duration(200)
+                  .style("fill-opacity", 1)
+                  .style("opacity", 1);
+          });
+
 }
 
 

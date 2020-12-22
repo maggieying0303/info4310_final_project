@@ -64,3 +64,7 @@ a.disney{
 .prime_hover{
   display: inline;
 }
+
+.disney_hover{
+  width: 50px;
+}
