@@ -153,7 +153,7 @@ function drawSliderVis(svgClass) {
         .attr("class", "platformText")
         .attr("id", function(d) { return d.replace("+", "") + "_text";})
         .attr("x", function(d, i) {
-          return sliderAttr.width/4 * (i) + padding/2+sliderAttr.margin;
+          return (sliderAttr.width-sliderAttr.margin)/4 * (i) + padding/2+sliderAttr.margin/2;
         })
         .attr("y", menuStartingHeight)
         .text(function(d) {return d;})
@@ -173,7 +173,7 @@ function drawSliderVis(svgClass) {
           .attr("class", p.replace("+", "") + "_platformTextDetails")
           .attr("id", function() { return p.replace("+", "") + "_" + detail + "_text";})
           .attr("x", function() {
-            return sliderAttr.width/4 * (count) + padding/2 + sliderAttr.margin;
+            return (sliderAttr.width-sliderAttr.margin)/4 * (count) + padding/2 + sliderAttr.margin/2;
           })
           .attr("y", menuStartingHeight + yCount)
           .text(function() {
@@ -189,7 +189,7 @@ function drawSliderVis(svgClass) {
           .attr("class", p.replace("+", "") + "_platformTextDetails")
           .attr("id", function() { return p.replace("+", "") + "_" + detail + "_text";})
           .attr("x", function() {
-            return sliderAttr.width/4 * (count+1) - padding*2 + sliderAttr.margin;
+            return (sliderAttr.width-sliderAttr.margin)/4 * (count+1) - padding*3 + sliderAttr.margin;
           })
           .attr("y", menuStartingHeight + yCount)
           .text(platformDetailPrice[p][detail])
@@ -206,7 +206,7 @@ function drawSliderVis(svgClass) {
             .attr("class", p.replace("+", "") + "_platformTextDetails")
             .attr("id", function() { return p.replace("+", "") + "_" + detail + "_text";})
             .attr("x", function() {
-              return sliderAttr.width/4 * (count) + padding/2 + sliderAttr.margin;
+              return (sliderAttr.width-sliderAttr.margin)/4 * (count) + padding/2 + sliderAttr.margin/2;
             })
             .attr("y", function(d,i) {
               return menuStartingHeight + yCount + 15*(i+1);
@@ -264,29 +264,29 @@ function drawSliderVis(svgClass) {
     //Pay-to-watch content usually include newly released movies or popular classics, ie. Mulan (Disney+) or Parasite (Prime)
     svg.append("text")
       .attr("class", "paytowatch_textAnnotation")
-      .attr("x", sliderAttr.width*0.65)
+      .attr("x", sliderAttr.width*0.65 - sliderAttr.margin)
       .attr("y", sliderAttr.height*0.8)
       .text("Pay-to-watch content usually include newly released")
       .style("opacity", 0)
       .style("font-size", "11px");
     svg.append("text")
       .attr("class", "paytowatch_textAnnotation")
-      .attr("x", sliderAttr.width*0.65)
+      .attr("x", sliderAttr.width*0.65- sliderAttr.margin)
       .attr("y", sliderAttr.height*0.8+15)
       .text("movies or popular classics, ie. Parasite (Prime)")
       .style("opacity", 0)
       .style("font-size", "11px");
     svg.append("text")
       .attr("class", "paytowatch_textAnnotation")
-      .attr("x", sliderAttr.width*0.65)
+      .attr("x", sliderAttr.width*0.65 - sliderAttr.margin)
       .attr("y", sliderAttr.height*0.8+30)
       .text("or Mulan (Disney+)")
       .style("opacity", 0)
       .style("font-size", "11px");
     svg.append("line")
       .attr("class", "paytowatch_textAnnotation")
-      .attr("x1", sliderAttr.width*0.65)
-      .attr("x2", sliderAttr.width*0.65+padding*12)
+      .attr("x1", sliderAttr.width*0.65 - sliderAttr.margin)
+      .attr("x2", sliderAttr.width*0.65+padding*12 - sliderAttr.margin)
       .attr("y1", sliderAttr.height*0.8+40)
       .attr("y2", sliderAttr.height*0.8+40)
       .style("stroke", "black")
@@ -294,14 +294,14 @@ function drawSliderVis(svgClass) {
       .style("stroke-width", "2px");
     svg.append("text")
       .attr("class", "paytowatch_textAnnotation")
-      .attr("x", sliderAttr.width*0.65+padding)
+      .attr("x", sliderAttr.width*0.65+padding - sliderAttr.margin)
       .attr("y", sliderAttr.height*0.8-20)
       .text("↖")
       .style("opacity", 0)
       .style("font-size", "20px");
     svg.append("text")
       .attr("class", "paytowatch_textAnnotation")
-      .attr("x", sliderAttr.width*0.65+padding*10.5)
+      .attr("x", sliderAttr.width*0.65+padding*10.5 - sliderAttr.margin)
       .attr("y", sliderAttr.height*0.8-20)
       .text("↗")
       .style("opacity", 0)
@@ -309,22 +309,22 @@ function drawSliderVis(svgClass) {
 
     svg.append("text")
       .attr("class", "addons_textAnnotation")
-      .attr("x", sliderAttr.width*0.4)
+      .attr("x", sliderAttr.width*0.4 - sliderAttr.margin)
       .attr("y", menuStartingHeight - padding*3)
       .text("Add ons include extra TV channels and plan")
       .style("opacity", 0)
       .style("font-size", "11px");
     svg.append("text")
       .attr("class", "addons_textAnnotation")
-      .attr("x", sliderAttr.width*0.4)
+      .attr("x", sliderAttr.width*0.4 - sliderAttr.margin)
       .attr("y", menuStartingHeight - padding*3 + 15)
       .text("features for an additional fee")
       .style("opacity", 0)
       .style("font-size", "11px");
     svg.append("line")
       .attr("class", "addons_textAnnotation")
-      .attr("x1", sliderAttr.width*0.4)
-      .attr("x2", sliderAttr.width*0.4+padding*10)
+      .attr("x1", sliderAttr.width*0.4 - sliderAttr.margin)
+      .attr("x2", sliderAttr.width*0.4+padding*10 - sliderAttr.margin)
       .attr("y1", menuStartingHeight - padding*3 - 15)
       .attr("y2", menuStartingHeight - padding*3 - 15)
       .style("stroke", "black")
@@ -332,14 +332,14 @@ function drawSliderVis(svgClass) {
       .style("stroke-width", "2px");
     svg.append("text")
       .attr("class", "addons_textAnnotation")
-      .attr("x", sliderAttr.width*0.4)
+      .attr("x", sliderAttr.width*0.4 - sliderAttr.margin)
       .attr("y", menuStartingHeight - padding*3 + 35)
       .text("↙")
       .style("opacity", 0)
       .style("font-size", "20px");
     svg.append("text")
       .attr("class", "addons_textAnnotation")
-      .attr("x", sliderAttr.width*0.4+padding*9.5)
+      .attr("x", sliderAttr.width*0.4+padding*9.5 - sliderAttr.margin)
       .attr("y", menuStartingHeight - padding*3 + 35)
       .text("↘")
       .style("opacity", 0)
@@ -368,7 +368,7 @@ function addFilterButton(svg, x, y, text, filterMapKey) {
         d3.select(this)
           .transition()
           .duration(400)
-          .style("fill", "#e5e5e5");
+          .style("fill", "#a6a4a4");
       } else {
         d3.select(this)
           .transition()
