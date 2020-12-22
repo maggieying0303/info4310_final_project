@@ -368,7 +368,7 @@ function addFilterButton(svg, x, y, text, filterMapKey) {
         d3.select(this)
           .transition()
           .duration(400)
-          .style("fill", "#a6a4a4");
+          .style("fill", "#e5e5e5");
       } else {
         d3.select(this)
           .transition()

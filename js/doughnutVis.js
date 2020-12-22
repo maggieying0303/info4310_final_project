@@ -98,7 +98,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
     })
     .attr("height", padding*1.5)
     .attr("width", padding*6)
-    .style("fill", (d, i) => i == 0 ? "#a6a4a4" : "#ffffff")
+    .style("fill", (d, i) => i == 0 ? "#d3d3d3" : "#ffffff")
     .style("stroke", "black")
     .style("stroke-width", "3px")
     .style("cursor", "pointer")
@@ -125,7 +125,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
       d3.select(this)
         .transition()
         .duration(300)
-        .style("fill", "#A6A4A4")
+        .style("fill", "#d3d3d3")
         .style("stroke", "black")
         .style("stroke-width", "3px");
     })
@@ -160,6 +160,8 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                .data(data_ready[i][j])
                .enter()
                .append('path')
+               .attr("class", "netflix_donut")
+               .attr("class", "donut")
                .attr('d', d3.arc()
                   .innerRadius(innerRadius)
                   .outerRadius(radius)
@@ -169,13 +171,15 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                  return(netflixColor(d.data.key))
                })
                .attr("stroke", "black")
-               .attr("stroke-width", "2px")
+               .attr("stroke-width", "3px")
                .style("opacity", 1)
 
            svg.selectAll('#percentText')
               .data(data_ready[i][j])
               .enter()
               .append('text')
+              .attr("class", "netflix_donut")
+              .attr("class", "donut")
                 .attr("x", -25)
                 .attr("y", 10 + 200)
                 .text(Math.round((data_ready[i][j][0].data.value /
@@ -189,6 +193,8 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
               .data(data_ready[i][j])
               .enter()
               .append('text')
+              .attr("class", "netflix_donut")
+              .attr("class", "donut")
                 .attr("x", -40) // manually adjusted centering
                 .attr("y", 160 + 200)
                 .text("Netflix")
@@ -201,6 +207,8 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
               .data(data_ready[i][j])
               .enter()
               .append('text')
+              .attr("class", "netflix_donut")
+              .attr("class", "donut")
                 .attr("x", -80) // manually adjusted centering
                 .attr("y", 200 + 200)
                 .text((data_ready[i][j][0].data.value).toString() + " of " + totalMovies["Netflix"] + " movies")
@@ -209,6 +217,27 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                 .style("font-size", "16")
                 .style("text-align", "center")
                 .style("opacity", 0.6)
+
+                //text hover effect
+                d3.selectAll(".netflix_hover")
+                  .on('mouseover', function(){
+
+                    console.log("hover");
+
+                    // d3.selectAll("#colorPie")
+                    //   .transition().duration(200)
+                    //   .style("opacity", 0.1);
+
+                    d3.selectAll(".netflix_donut")
+                      .transition().duration(200)
+                      .style("opacity", 0.1);
+                  })
+                  .on('mouseout', function(){
+                    // d3.selectAll(".donut")
+                    //   .transition().duration(200)
+                    //   .style("opacity", 1);
+
+                  });
         }
         else if (data_ready[i][j][0].data.key == "Hulu") {
           // draw prop of doughnut
@@ -225,7 +254,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                return(huluColor(d.data.key))
              })
              .attr("stroke", "black")
-             .attr("stroke-width", "2px")
+             .attr("stroke-width", "3px")
              .style("opacity", 1)
 
            svg.selectAll('#percentText')
@@ -281,7 +310,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                return(disneyColor(d.data.key))
              })
              .attr("stroke", "black")
-             .attr("stroke-width", "2px")
+             .attr("stroke-width", "3px")
              .style("opacity", 1)
 
            svg.selectAll('#percentText')
@@ -337,7 +366,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
                return(primeColor(d.data.key))
              })
              .attr("stroke", "black")
-             .attr("stroke-width", "2px")
+             .attr("stroke-width", "3px")
              .style("opacity", 1)
 
            svg.selectAll('#percentText')
@@ -385,6 +414,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
   // initialize Drama
   draw();
 }
+
 
 function parseGenreData(topGenres, top20_genres) {
   var final = {};

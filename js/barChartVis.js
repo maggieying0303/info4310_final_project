@@ -66,7 +66,7 @@ function drawBarChart(svgClass, topGenres, platforms, top20_genres) {
       .append("tspan")
       .attr("id", d => "tspan_" + d.replace("+", ""))
       .text(d => " / " + totalMovies[d] + " movies")
-      .style("fill", "#A6A4A4")
+      .style("fill", "#d3d3d3")
       .style("font-size", "20px");
 
   // add filter buttons
@@ -85,7 +85,7 @@ function drawBarChart(svgClass, topGenres, platforms, top20_genres) {
     })
     .attr("height", padding*1.5)
     .attr("width", padding*6)
-    .style("fill", (d, i) => i == 0 ? "#a6a4a4" : "#ffffff")
+    .style("fill", (d, i) => i == 0 ? "#d3d3d3" : "#ffffff")
     .style("stroke", "black")
     .style("stroke-width", "3px")
     .style("cursor", "pointer")
@@ -110,7 +110,7 @@ function drawBarChart(svgClass, topGenres, platforms, top20_genres) {
             .append("tspan")
             .attr("id", "tspan_" + p.replace("+", ""))
             .text(" / " + totalMovies[p] + " movies")
-            .style("fill", "#A6A4A4")
+            .style("fill", "#a6a4a4")
             .style("font-size", "20px");
       }
 
@@ -122,7 +122,7 @@ function drawBarChart(svgClass, topGenres, platforms, top20_genres) {
       d3.select(this)
         .transition()
         .duration(300)
-        .style("fill", "#A6A4A4")
+        .style("fill", "#d3d3d3")
         .style("stroke", "black")
         .style("stroke-width", "3px");
     });
@@ -143,6 +143,140 @@ function drawBarChart(svgClass, topGenres, platforms, top20_genres) {
       .style("font-size", "16px")
       .style("font-weight", "bold")
       .style("text-anchor", "middle");
+
+      console.log("test")
+
+      d3.selectAll(".netflix_hover_bar")
+        .on('mouseover', function(){
+
+          d3.select("#rect_Disney")
+            .transition().duration(200)
+            .style("fill-opacity", 0.3);
+
+          d3.select("#rect_Prime")
+            .transition().duration(200)
+            .style("fill-opacity", 0.3);
+
+          d3.select("#rect_Hulu")
+            .transition().duration(200)
+            .style("fill-opacity", 0.3);
+
+        })
+        .on('mouseout', function(){
+
+          d3.select("#rect_Disney")
+            .transition().duration(200)
+            .style("fill-opacity", 1);
+
+          d3.select("#rect_Prime")
+            .transition().duration(200)
+            .style("fill-opacity", 1);
+
+          d3.select("#rect_Hulu")
+            .transition().duration(200)
+            .style("fill-opacity", 1);
+
+        });
+
+        d3.selectAll(".hulu_hover")
+          .on('mouseover', function(){
+
+            d3.select("#rect_Disney")
+              .transition().duration(200)
+              .style("fill-opacity", 0.3);
+
+            d3.select("#rect_Prime")
+              .transition().duration(200)
+              .style("fill-opacity", 0.3);
+
+            d3.select("#rect_Netflix")
+              .transition().duration(200)
+              .style("fill-opacity", 0.3);
+
+          })
+          .on('mouseout', function(){
+
+            d3.select("#rect_Disney")
+              .transition().duration(200)
+              .style("fill-opacity", 1);
+
+            d3.select("#rect_Prime")
+              .transition().duration(200)
+              .style("fill-opacity", 1);
+
+            d3.select("#rect_Netflix")
+              .transition().duration(200)
+              .style("fill-opacity", 1);
+
+          });
+
+          d3.selectAll(".disney_hover")
+            .on('mouseover', function(){
+
+              console.log("hoho");
+
+              d3.select("#rect_Netflix")
+                .transition().duration(200)
+                .style("fill-opacity", 0.3);
+
+              d3.select("#rect_Prime")
+                .transition().duration(200)
+                .style("fill-opacity", 0.3);
+
+              d3.select("#rect_Hulu")
+                .transition().duration(200)
+                .style("fill-opacity", 0.3);
+
+            })
+            .on('mouseout', function(){
+
+              d3.select("#rect_Netflix")
+                .transition().duration(200)
+                .style("fill-opacity", 1);
+
+              d3.select("#rect_Prime")
+                .transition().duration(200)
+                .style("fill-opacity", 1);
+
+              d3.select("#rect_Hulu")
+                .transition().duration(200)
+                .style("fill-opacity", 1);
+
+            });
+
+            d3.selectAll(".prime_hover")
+              .on('mouseover', function(){
+
+                console.log("okok");
+
+                d3.select("#rect_Disney")
+                  .transition().duration(200)
+                  .style("fill-opacity", 0.3);
+
+                d3.select("#rect_Netflix")
+                  .transition().duration(200)
+                  .style("fill-opacity", 0.3);
+
+                d3.select("#rect_Hulu")
+                  .transition().duration(200)
+                  .style("fill-opacity", 0.3);
+
+              })
+              .on('mouseout', function(){
+
+                d3.select("#rect_Disney")
+                  .transition().duration(200)
+                  .style("fill-opacity", 1);
+
+                d3.select("#rect_Netflix")
+                  .transition().duration(200)
+                  .style("fill-opacity", 1);
+
+                d3.select("#rect_Hulu")
+                  .transition().duration(200)
+                  .style("fill-opacity", 1);
+
+              });
 }
 
 function parseGenreData(topGenres, top20_genres) {
