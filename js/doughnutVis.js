@@ -2,6 +2,8 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
   let width = 250;
   let height = 250;
   let margin = 10;
+  let visHeight = 700;
+  let visWidth = 1000;
 
   let padding = 25;
   let barAttr = {
@@ -20,16 +22,16 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
   };
 
   let svg = d3.select(svgClass)
-              .append("svg")
-              .attr("width", 1000)
-              .attr("height", 1000)
+              // .append("svg")
+              // .attr("width", 1000)
+              // .attr("height", 1000)
               .append("g")
               .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
   let selectedGenre = "Drama";
 
-  console.log("initial:")
-  console.log(selectedGenre);
+  // console.log("initial:")
+  // console.log(selectedGenre);
 
   let data = parseGenreData(topGenres, top20_genres);
 
@@ -81,7 +83,7 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
   // console.log("Data format:")
   // console.log(data_ready);
 
-  console.log(topGenres)
+  // console.log(topGenres)
   // filter buttons
   svg.selectAll("#buttons")
     .data(topGenres)
@@ -106,8 +108,10 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
     .on("click", function(d) {
       // set the selected genre to be what's clicked
       selectedGenre = d;
-      console.log("new:")
-      console.log(selectedGenre);
+      // console.log("new:")
+      // console.log(selectedGenre);
+
+      svg.selectAll(".topGenreTag").remove();
 
       // clear the previously drawn doughnuts
       svg.selectAll('#colorPie').remove();
@@ -147,7 +151,6 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
       .style("font-size", "16px")
       .style("font-weight", "bold")
       .style("text-anchor", "middle");
-
 
   // drawing proportions of each doughnut for given genre
   function draw() {
@@ -381,6 +384,18 @@ function drawDoughnutVis(svgClass, topGenres, platforms, top20_genres) {
       }
     }
   }
+  let topGenreTempLst = ["Netflix", "Hulu", "Disney+", "Prime"];
+  let topGenrePieOrder = ["Netflix", "Disney+", "Hulu", "Prime"];
+  let count = 0;
+   for (var platform of topGenreTempLst) {
+     let platformNum = data_ready[selectedGenre][count];
+     let percentage = platformNum[0]["value"] / (platformNum[0]["value"] + platformNum[1]["value"]);
+     let index = topGenrePieOrder.indexOf(platform);
+     if (percentage > 0.42) {
+       drawTopGenreTag(svg, visWidth/4 * (index) - 60);
+     }
+     count = count + 1;
+   }
   }
   // initialize Drama
   draw();
@@ -400,4 +415,24 @@ function parseGenreData(topGenres, top20_genres) {
     }
   }
   return final;
+}
+
+function drawTopGenreTag(svg, x) {
+  svg.append("rect")
+    .attr("class", "topGenreTag")
+    .attr("x", x)
+    .attr("y", 430)
+    .attr("width", 120)
+    .attr("height", 50)
+    .style("rx", 10)
+    .style("fill", "#a6a4a4")
+    .style("stroke", "black")
+    .style("stroke-width", "3px");
+  svg.append("text")
+    .attr("class", "topGenreTag")
+    .attr("x", x + 60)
+    .attr("y", 430 + 25 + 5)
+    .text("Top Genre")
+    .style("text-anchor", "middle")
+    .style("font-weight", "bold");
 }
